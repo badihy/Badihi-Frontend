@@ -1,4 +1,4 @@
-import 'package:badihy/core/api/end_points.dart';
+import 'package:badihi/core/api/end_points.dart';
 
 class ErrorModel {
   final bool success;

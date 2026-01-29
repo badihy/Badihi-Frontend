@@ -1,5 +1,5 @@
-import 'package:badihy/core/extensions/app_mode_colors_extension.dart';
-import 'package:badihy/core/theme/app_tokens.dart';
+import 'package:badihi/core/extensions/app_mode_colors_extension.dart';
+import 'package:badihi/core/theme/app_tokens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

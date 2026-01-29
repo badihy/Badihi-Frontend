@@ -1,9 +1,9 @@
-import 'package:badihy/core/extensions/app_mode_colors_extension.dart';
-import 'package:badihy/core/extensions/extensions.dart';
-import 'package:badihy/core/theme/app_tokens.dart';
-import 'package:badihy/presentation/components/custom_app_bar.dart';
-import 'package:badihy/presentation/components/custom_text_form_field.dart';
-import 'package:badihy/presentation/components/main_button.dart';
+import 'package:badihi/core/extensions/app_mode_colors_extension.dart';
+import 'package:badihi/core/extensions/extensions.dart';
+import 'package:badihi/core/theme/app_tokens.dart';
+import 'package:badihi/presentation/components/custom_app_bar.dart';
+import 'package:badihi/presentation/components/custom_text_form_field.dart';
+import 'package:badihi/presentation/components/main_button.dart';
 import 'package:flutter/material.dart';
 
 class RestorePasswordPage extends StatefulWidget {
@@ -46,15 +46,7 @@ class _RestorePasswordPageState extends State<RestorePasswordPage> {
                     placeholderText: "",
                     prefixIcon: "assets/images/icons/passcode-lock.svg",
                     isPasswordField: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'برجاء إدخال كلمة المرور';
-                      }
-                      if (!value.isValidPassword) {
-                        return 'يجب أن تكون كلمة المرور 8 أحرف على الأقل';
-                      }
-                      return null;
-                    },
+                    fieldname: 'password',
                   ),
                 ),
                 SizedBox(height: AppSpacing.spacingSM),

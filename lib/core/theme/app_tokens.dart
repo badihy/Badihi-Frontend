@@ -1,4 +1,4 @@
-import 'package:badihy/core/extensions/app_mode_colors_extension.dart';
+import 'package:badihi/core/extensions/app_mode_colors_extension.dart';
 import 'package:flutter/material.dart';
 
 class AppColors {

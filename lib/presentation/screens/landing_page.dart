@@ -1,10 +1,10 @@
-import 'package:badihy/core/extensions/app_mode_colors_extension.dart';
-import 'package:badihy/core/theme/app_tokens.dart';
-import 'package:badihy/presentation/components/main_button.dart';
-import 'package:badihy/presentation/components/secondary_button.dart';
-import 'package:badihy/presentation/components/text_button.dart';
-import 'package:badihy/presentation/screens/login_page.dart';
-import 'package:badihy/presentation/screens/register_page.dart';
+import 'package:badihi/core/extensions/app_mode_colors_extension.dart';
+import 'package:badihi/core/theme/app_tokens.dart';
+import 'package:badihi/presentation/components/main_button.dart';
+import 'package:badihi/presentation/components/secondary_button.dart';
+import 'package:badihi/presentation/components/text_button.dart';
+import 'package:badihi/presentation/screens/login_page.dart';
+import 'package:badihi/presentation/screens/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

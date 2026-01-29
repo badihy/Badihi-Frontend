@@ -1,7 +1,7 @@
-import 'package:badihy/core/api/api_consumer.dart';
-import 'package:badihy/core/api/api_interceptors.dart';
-import 'package:badihy/core/api/end_points.dart';
-import 'package:badihy/core/errors/exceptions.dart';
+import 'package:badihi/core/api/api_consumer.dart';
+import 'package:badihi/core/api/api_interceptors.dart';
+import 'package:badihi/core/api/end_points.dart';
+import 'package:badihi/core/errors/exceptions.dart';
 import 'package:dio/dio.dart';
 
 class DioConsumer extends ApiConsumer {
@@ -41,7 +41,6 @@ class DioConsumer extends ApiConsumer {
     }
   }
 
-  @override
   Future post(
     String path, {
     dynamic data,
@@ -51,7 +50,7 @@ class DioConsumer extends ApiConsumer {
     try {
       final response = await dio.post(
         path,
-        data: isFormData ? FormData.fromMap(data) : data,
+        data: isFormData ? data : data,
         queryParameters: queryParameters,
       );
       return response.data;

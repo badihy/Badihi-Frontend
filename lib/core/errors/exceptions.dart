@@ -1,4 +1,4 @@
-import 'package:badihy/core/errors/error_model.dart';
+import 'package:badihi/core/errors/error_model.dart';
 import 'package:dio/dio.dart';
 
 class ServerException implements Exception {

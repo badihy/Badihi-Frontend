@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:badihy/core/theme/app_tokens.dart';
-import 'package:badihy/presentation/screens/landing_page.dart';
+import 'package:badihi/core/theme/app_tokens.dart';
+import 'package:badihi/presentation/screens/landing_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

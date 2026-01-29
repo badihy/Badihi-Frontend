@@ -1,25 +1,23 @@
-import 'package:badihy/core/api/end_points.dart';
-import 'package:badihy/core/cache/cache_helper.dart';
+import 'package:badihi/core/api/end_points.dart';
+import 'package:badihi/core/cache/cache_helper.dart';
+import 'package:badihi/core/services/service_locator.dart';
 import 'package:dio/dio.dart';
-import 'package:get_it/get_it.dart';
 
 // Observe each request
 class ApiInterceptor extends Interceptor {
   static CancelToken cancelToken = CancelToken(); // Add a CancelToken
-  // This is our global ServiceLocator
-  GetIt getIt = GetIt.instance;
 
-  @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    options.headers = {
-      "Authorization":
-          "Bearer ${getIt<CacheHelper>().getString(ApiKey.token) != null ? "${getIt<CacheHelper>().getString(ApiKey.token)}" : null}",
-    };
-    // Attach CancelToken to each request
-    options.cancelToken = cancelToken; // Attach the cancel token to requests
+  // @override
+  // void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  //   options.headers = {
+  //     "Authorization":
+  //         "Bearer ${getIt<CacheHelper>().getString(ApiKey.token) != null ? "${getIt<CacheHelper>().getString(ApiKey.token)}" : null}",
+  //   };
+  //   // Attach CancelToken to each request
+  //   options.cancelToken = cancelToken; // Attach the cancel token to requests
 
-    super.onRequest(options, handler);
-  }
+  //   super.onRequest(options, handler);
+  // }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {

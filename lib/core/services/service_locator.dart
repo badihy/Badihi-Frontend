@@ -1,4 +1,4 @@
-import 'package:badihy/core/cache/cache_helper.dart';
+import 'package:badihi/core/cache/cache_helper.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;

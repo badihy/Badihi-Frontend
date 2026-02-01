@@ -1,6 +1,8 @@
 import 'package:badihi/core/extensions/app_mode_colors_extension.dart';
 import 'package:badihi/core/theme/app_tokens.dart';
+import 'package:badihi/cubit/auth/google_auth.dart';
 import 'package:badihi/presentation/components/main_button.dart';
+import 'package:badihi/presentation/components/notification_toast.dart';
 import 'package:badihi/presentation/components/secondary_button.dart';
 import 'package:badihi/presentation/components/text_button.dart';
 import 'package:badihi/presentation/screens/login_page.dart';
@@ -8,9 +10,40 @@ import 'package:badihi/presentation/screens/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class LandingPage extends StatelessWidget {
+
+class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
+
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+  bool _isLoading = false;
+  Future<void> _signInWithGoogle() async {
+    setState(() {
+      _isLoading = true;
+    });
+    try {
+      final userCredentials = await GoogleSignInService.signInWithGoogle();
+      if (!mounted) return;
+      if (userCredentials != null) {
+        if (!mounted) return;
+        print('Google Sign-In successful: ${userCredentials.user?.displayName}');
+      }
+    } catch (error) {
+      if (!mounted) return;
+      showToast(context: context, message: "خطأ في تسجيل الدخول باستخدام جوجل");
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,11 +106,15 @@ class LandingPage extends StatelessWidget {
             ),
             Column(
               children: [
-                MainButton(
-                  text: "تسجيل الدخول باستخدام جوجل",
-                  onTap: () {},
-                  svgPath: "assets/images/googleIcon.svg",
-                ),
+                _isLoading
+                    ? CircularProgressIndicator(
+                        color: colors.fgBrandPrimary,
+                      )
+                    : MainButton(
+                        text: "تسجيل الدخول باستخدام جوجل",
+                        onTap: _signInWithGoogle,
+                        svgPath: "assets/images/googleIcon.svg",
+                      ),
                 SizedBox(height: AppSpacing.spacingLG),
                 SecondaryButton(
                   text: "إنشاء حساب جديد",

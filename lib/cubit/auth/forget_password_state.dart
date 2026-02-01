@@ -15,3 +15,14 @@ final class ForgetPasswordFailure extends ForgetPasswordState {
 
   ForgetPasswordFailure({required this.errMessage});
 }
+
+// Reset password states
+final class ResetPasswordSuccess extends ForgetPasswordState {}
+
+final class ResetPasswordLoading extends ForgetPasswordState {}
+
+final class ResetPasswordFailure extends ForgetPasswordState {
+  final String errMessage;
+
+  ResetPasswordFailure({required this.errMessage});
+}

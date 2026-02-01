@@ -32,4 +32,29 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       emit(ForgetPasswordFailure(errMessage: "حدثت مشكلة ما، يرجى المحاولة مرة أخرى"));
     }
   }
+
+  // Handling resetPassword
+  Future<void> resetPassword({
+    required String token,
+    required String newPassword,
+    required String confirmNewPassword,
+  }) async {
+    try {
+      emit(ResetPasswordLoading());
+      final response = await api.post(
+        EndPoints.resetPassword,
+        data: {
+          ApiKey.token: token,
+          ApiKey.newPassword: newPassword,
+          ApiKey.confirmNewPassword: confirmNewPassword,
+        },
+      );
+
+      emit(ResetPasswordSuccess());
+    } on ServerException catch (e) {
+      emit(ResetPasswordFailure(errMessage: e.errModel.message));
+    } catch (e) {
+      emit(ResetPasswordFailure(errMessage: "حدثت مشكلة ما، يرجى المحاولة مرة أخرى"));
+    }
+  }
 }

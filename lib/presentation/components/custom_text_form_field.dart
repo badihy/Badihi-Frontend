@@ -1,4 +1,4 @@
-import 'package:badihi/core/extensions/app_mode_colors_extension.dart';
+import 'package:badihi/core/extensions/context_extensions.dart';
 import 'package:badihi/core/extensions/extensions.dart';
 import 'package:badihi/core/theme/app_tokens.dart';
 import 'package:badihi/cubit/auth/forget_password_cubit.dart';
@@ -101,15 +101,13 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<AppModeColorsExtension>()!;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           widget.labelText,
           style: TextStyle(
-            color: colors.textSecondary,
+            color: context.appColors.textSecondary,
             fontSize: 14,
             fontWeight: FontWeight.w500,
             height: 1.43,
@@ -140,41 +138,42 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               labelText: widget.placeholderText,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               labelStyle: TextStyle(
-                color: colors.textPlaceholder,
+                color: context.appColors.textPlaceholder,
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
                 height: 1.50,
               ),
               errorStyle: TextStyle(
-                color: colors.textErrorPrimary,
+                color: context.appColors.textErrorPrimary,
                 fontSize: 14,
                 fontWeight: FontWeight.w400,
                 height: 1.43,
               ),
               enabledBorder: OutlineInputBorder(
-                borderSide:
-                    BorderSide(width: 1, color: _hasError ? colors.borderErrorSubtle : colors.borderPrimary),
+                borderSide: BorderSide(
+                    width: 1,
+                    color: _hasError ? context.appColors.borderErrorSubtle : context.appColors.borderPrimary),
                 borderRadius: BorderRadius.circular(AppRadius.radiusMD),
               ),
               border: OutlineInputBorder(
-                borderSide: BorderSide(width: 1, color: colors.borderBrand),
+                borderSide: BorderSide(width: 1, color: context.appColors.borderBrand),
                 borderRadius: BorderRadius.circular(AppRadius.radiusMD),
               ),
               errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 1, color: colors.borderErrorSubtle),
+                borderSide: BorderSide(width: 1, color: context.appColors.borderErrorSubtle),
                 borderRadius: BorderRadius.circular(AppRadius.radiusMD),
               ),
               focusedErrorBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 1, color: colors.textErrorPrimary),
+                borderSide: BorderSide(width: 1, color: context.appColors.textErrorPrimary),
                 borderRadius: BorderRadius.circular(AppRadius.radiusMD),
               ),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(12),
                 child: SvgPicture.asset(
-                  widget.prefixIcon,
+                  "assets/images/icons/${widget.prefixIcon}.svg",
                   width: 20,
                   height: 20,
-                  colorFilter: ColorFilter.mode(colors.fgQuaternary, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(context.appColors.fgQuaternary, BlendMode.srcIn),
                 ),
               ),
               suffixIcon: _hasError
@@ -184,7 +183,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                         "assets/images/icons/alert-circle.svg",
                         width: 16,
                         height: 16,
-                        colorFilter: ColorFilter.mode(colors.fgErrorSecondary, BlendMode.srcIn),
+                        colorFilter: ColorFilter.mode(context.appColors.fgErrorSecondary, BlendMode.srcIn),
                       ),
                     )
                   : widget.isPasswordField
@@ -201,9 +200,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                       : null,
               contentPadding: EdgeInsets.zero,
             ),
-            cursorColor: colors.textPrimary,
+            cursorColor: context.appColors.textPrimary,
             style: TextStyle(
-              color: colors.textPrimary,
+              color: context.appColors.textPrimary,
               fontSize: 16,
               fontWeight: FontWeight.w400,
               height: 1.50,

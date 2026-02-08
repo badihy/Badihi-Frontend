@@ -1,8 +1,6 @@
-import 'package:badihi/core/extensions/app_mode_colors_extension.dart';
+import 'package:badihi/core/extensions/context_extensions.dart';
 import 'package:badihi/core/theme/app_tokens.dart';
-import 'package:badihi/cubit/auth/google_auth.dart';
-import 'package:badihi/presentation/components/main_button.dart';
-import 'package:badihi/presentation/components/notification_toast.dart';
+import 'package:badihi/presentation/components/google_sign_in_button.dart';
 import 'package:badihi/presentation/components/secondary_button.dart';
 import 'package:badihi/presentation/components/text_button.dart';
 import 'package:badihi/presentation/screens/login_page.dart';
@@ -10,8 +8,6 @@ import 'package:badihi/presentation/screens/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -21,33 +17,8 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  bool _isLoading = false;
-  Future<void> _signInWithGoogle() async {
-    setState(() {
-      _isLoading = true;
-    });
-    try {
-      final userCredentials = await GoogleSignInService.signInWithGoogle();
-      if (!mounted) return;
-      if (userCredentials != null) {
-        if (!mounted) return;
-        print('Google Sign-In successful: ${userCredentials.user?.displayName}');
-      }
-    } catch (error) {
-      if (!mounted) return;
-      showToast(context: context, message: "خطأ في تسجيل الدخول باستخدام جوجل");
-    } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<AppModeColorsExtension>();
     return Scaffold(
       body: Container(
         margin:
@@ -72,7 +43,7 @@ class _LandingPageState extends State<LandingPage> {
                       'بديهي',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: colors!.textBrandTertiary,
+                        color: context.appColors.textBrandTertiary,
                         fontSize: 40,
                         fontWeight: FontWeight.w600,
                         height: 1.20,
@@ -85,7 +56,7 @@ class _LandingPageState extends State<LandingPage> {
                   'تعلم بالقراءة، بشكل بديهي',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: colors.textPrimary,
+                    color: context.appColors.textPrimary,
                     fontSize: 30,
                     fontWeight: FontWeight.w600,
                     height: 1.27,
@@ -96,7 +67,7 @@ class _LandingPageState extends State<LandingPage> {
                   'نقدم محتوى تعليميًا على شكل شرائح موجزة تشرح المفاهيم خطوة بخطوة.',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: colors.textSecondary,
+                    color: context.appColors.textSecondary,
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
                     height: 1.56,
@@ -106,15 +77,7 @@ class _LandingPageState extends State<LandingPage> {
             ),
             Column(
               children: [
-                _isLoading
-                    ? CircularProgressIndicator(
-                        color: colors.fgBrandPrimary,
-                      )
-                    : MainButton(
-                        text: "تسجيل الدخول باستخدام جوجل",
-                        onTap: _signInWithGoogle,
-                        svgPath: "assets/images/googleIcon.svg",
-                      ),
+                GoogleSignInButton(),
                 SizedBox(height: AppSpacing.spacingLG),
                 SecondaryButton(
                   text: "إنشاء حساب جديد",

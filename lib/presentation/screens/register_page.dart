@@ -1,15 +1,14 @@
-import 'package:badihi/core/extensions/app_mode_colors_extension.dart';
+import 'package:badihi/core/extensions/context_extensions.dart';
 import 'package:badihi/core/theme/app_tokens.dart';
 import 'package:badihi/cubit/auth/forget_password_cubit.dart';
 import 'package:badihi/cubit/auth/register_cubit.dart';
 import 'package:badihi/presentation/components/custom_app_bar.dart';
 import 'package:badihi/presentation/components/custom_text_form_field.dart';
+import 'package:badihi/presentation/components/google_sign_in_button.dart';
 import 'package:badihi/presentation/components/main_button.dart';
 import 'package:badihi/presentation/components/or_divider.dart';
-import 'package:badihi/presentation/components/secondary_button.dart';
 import 'package:badihi/presentation/components/text_button.dart';
-import 'package:badihi/presentation/components/titles_text.dart';
-import 'package:badihi/presentation/screens/home_page.dart';
+import 'package:badihi/presentation/screens/home_controller.dart';
 import 'package:badihi/presentation/screens/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +29,6 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController registerPassword = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<AppModeColorsExtension>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
@@ -50,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
               registerPassword.clear();
               Navigator.push(
                 context,
-                CupertinoPageRoute(builder: (_) => HomePage()),
+                CupertinoPageRoute(builder: (_) => HomeController()),
               );
             } else if (state is RegisterFailure) {
               registerFormKey.currentState!.validate();
@@ -73,9 +71,15 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TitlesText(
-                      text: 'أدخل بياناتك لإتمام إنشاء الحساب',
-                      IsL_M_S: "L",
+                    Text(
+                      'أدخل بياناتك لإتمام إنشاء الحساب',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        color: context.appColors.textSecondary /* Colors-Text-text-secondary-(700) */,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        height: 1.56,
+                      ),
                     ),
                     SizedBox(height: AppSpacing.spacingXL),
                     Form(
@@ -87,7 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             controller: registerFullName,
                             labelText: 'الاسم *',
                             placeholderText: "اكتب اسمك",
-                            prefixIcon: "assets/images/icons/user-01.svg",
+                            prefixIcon: "user-01",
                             fieldname: 'name',
                           ),
                           SizedBox(height: AppSpacing.spacingXL),
@@ -95,7 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             controller: registerEmail,
                             labelText: 'البريد الإلكتروني*',
                             placeholderText: "example@badihi.com",
-                            prefixIcon: "assets/images/icons/mail-01.svg",
+                            prefixIcon: "mail-01",
                             fieldname: 'email',
                           ),
                           SizedBox(height: AppSpacing.spacingXL),
@@ -103,7 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             controller: registerPassword,
                             labelText: 'كلمة المرور*',
                             placeholderText: "",
-                            prefixIcon: "assets/images/icons/passcode-lock.svg",
+                            prefixIcon: "passcode-lock",
                             isPasswordField: true,
                             fieldname: 'password',
                           ),
@@ -114,7 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Text(
                       'يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل',
                       style: TextStyle(
-                        color: colors!.textTertiary /* Colors-Text-text-tertiary_hover */,
+                        color: context.appColors.textTertiary /* Colors-Text-text-tertiary_hover */,
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                         height: 1.43,
@@ -142,7 +146,15 @@ class _RegisterPageState extends State<RegisterPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TitlesText(text: "لديك حساب بالفعل؟ ", IsL_M_S: "M"),
+                        Text(
+                          'لديك حساب بالفعل؟',
+                          style: TextStyle(
+                            color: context.appColors.textSecondary /* Colors-Text-text-secondary-(700) */,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            height: 1.50,
+                          ),
+                        ),
                         TextBtn(
                           btnText: 'سجّل الدخول',
                           onTap: () {
@@ -161,10 +173,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     SizedBox(height: AppSpacing.spacingLG),
                     OrDivider(),
                     SizedBox(height: AppSpacing.spacingLG),
-                    SecondaryButton(
-                      text: "تسجيل الدخول باستخدام جوجل",
-                      onTap: () {},
-                      svgPath: "assets/images/googleIcon.svg",
+                    GoogleSignInButton(
+                      isPrimary: false,
                     ),
                   ],
                 ),

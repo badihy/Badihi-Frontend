@@ -6,9 +6,10 @@ import 'package:badihi/cubit/auth/forget_password_cubit.dart';
 import 'package:badihi/cubit/auth/login_cubit.dart';
 import 'package:badihi/cubit/auth/register_cubit.dart';
 import 'package:badihi/core/services/firebase_options.dart';
-import 'package:badihi/presentation/screens/splash_screen.dart';
+import 'package:badihi/presentation/screens/home_controller.dart';
 import 'package:badihi/core/theme/theme.dart';
 import 'package:badihi/presentation/screens/reset_password_page.dart';
+import 'package:badihi/presentation/screens/splash_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
@@ -101,7 +102,7 @@ class Badihi extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          home: SplashScreen(),
+          home: HomeController(),
         ),
       ),
     );

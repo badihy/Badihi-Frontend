@@ -1,5 +1,4 @@
-import 'package:badihi/core/extensions/app_mode_colors_extension.dart';
-import 'package:badihi/presentation/components/titles_text.dart';
+import 'package:badihi/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class OrDivider extends StatelessWidget {
@@ -7,22 +6,29 @@ class OrDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<AppModeColorsExtension>();
     return Row(
       children: [
         Expanded(
           child: Divider(
-            color: colors!.borderSecondary,
+            color: context.appColors.borderSecondary,
             thickness: 1,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: TitlesText(text: "أو", IsL_M_S: "L"),
-        ),
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              'أو',
+              textAlign: TextAlign.right,
+              style: TextStyle(
+                color: context.appColors.textPrimary,
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                height: 1.50,
+              ),
+            )),
         Expanded(
           child: Divider(
-            color: colors.borderSecondary,
+            color: context.appColors.borderSecondary,
             thickness: 1,
           ),
         ),

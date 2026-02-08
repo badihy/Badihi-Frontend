@@ -1,4 +1,4 @@
-import 'package:badihi/core/extensions/app_mode_colors_extension.dart';
+import 'package:badihi/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class TextBtn extends StatelessWidget {
@@ -15,7 +15,6 @@ class TextBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<AppModeColorsExtension>();
     return TextButton(
       onPressed: onTap,
       style: TextButton.styleFrom(
@@ -26,7 +25,7 @@ class TextBtn extends StatelessWidget {
       child: Text(
         btnText!,
         style: TextStyle(
-          color: colors!.textBrandSecondary,
+          color: context.appColors.textBrandSecondary,
           fontSize: isLight ? 14 : 16,
           fontWeight: isLight ? FontWeight.w400 : FontWeight.w600,
           height: 1.50,

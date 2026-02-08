@@ -1,15 +1,17 @@
+import 'package:badihi/core/extensions/context_extensions.dart';
 import 'package:badihi/core/theme/app_tokens.dart';
+import 'package:badihi/cubit/auth/forget_password_cubit.dart';
 import 'package:badihi/cubit/auth/login_cubit.dart';
+import 'package:badihi/cubit/auth/register_cubit.dart';
 import 'package:badihi/presentation/components/custom_app_bar.dart';
 import 'package:badihi/presentation/components/custom_text_form_field.dart';
+import 'package:badihi/presentation/components/google_sign_in_button.dart';
 import 'package:badihi/presentation/components/main_button.dart';
 import 'package:badihi/presentation/components/notification_toast.dart';
 import 'package:badihi/presentation/components/or_divider.dart';
-import 'package:badihi/presentation/components/secondary_button.dart';
 import 'package:badihi/presentation/components/text_button.dart';
-import 'package:badihi/presentation/components/titles_text.dart';
 import 'package:badihi/presentation/screens/forget_password_page.dart';
-import 'package:badihi/presentation/screens/home_page.dart';
+import 'package:badihi/presentation/screens/home_controller.dart';
 import 'package:badihi/presentation/screens/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +72,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
               loginPassword.clear();
               Navigator.push(
                 context,
-                CupertinoPageRoute(builder: (_) => HomePage()),
+                CupertinoPageRoute(builder: (_) => HomeController()),
               );
             } else if (state is LoginFailure) {
               showToast(context: context, message: state.errMessage, isError: true);
@@ -93,9 +95,15 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TitlesText(
-                      text: 'أدخل بريدك الإلكتروني وكلمة المرور لتسجيل الدخول إلى حسابك',
-                      IsL_M_S: "L",
+                    Text(
+                      'أدخل بريدك الإلكتروني وكلمة المرور لتسجيل الدخول إلى حسابك',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        color: context.appColors.textSecondary /* Colors-Text-text-secondary-(700) */,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        height: 1.56,
+                      ),
                     ),
                     SizedBox(height: AppSpacing.spacingXL),
                     Form(
@@ -107,7 +115,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                             controller: loginEmail,
                             labelText: 'البريد الإلكتروني*',
                             placeholderText: "example@badihi.com",
-                            prefixIcon: "assets/images/icons/mail-01.svg",
+                            prefixIcon: "mail-01",
                             fieldname: 'email',
                           ),
                           SizedBox(height: AppSpacing.spacingXL),
@@ -115,7 +123,7 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                             controller: loginPassword,
                             labelText: 'كلمة المرور*',
                             placeholderText: "",
-                            prefixIcon: "assets/images/icons/passcode-lock.svg",
+                            prefixIcon: "passcode-lock",
                             isPasswordField: true,
                             fieldname: 'password',
                           ),
@@ -141,7 +149,15 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TitlesText(text: "ليس لديك حساب؟ ", IsL_M_S: "M"),
+                        Text(
+                          'ليس لديك حساب؟',
+                          style: TextStyle(
+                            color: context.appColors.textSecondary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            height: 1.50,
+                          ),
+                        ),
                         TextBtn(
                           btnText: "تسجيل حساب جديد",
                           onTap: () {
@@ -160,11 +176,9 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                     SizedBox(height: AppSpacing.spacingLG),
                     OrDivider(),
                     SizedBox(height: AppSpacing.spacingLG),
-                    SecondaryButton(
-                      text: "تسجيل الدخول باستخدام جوجل",
-                      onTap: () {},
-                      svgPath: "assets/images/googleIcon.svg",
-                    ),
+                    GoogleSignInButton(
+                      isPrimary: false,
+                    )
                   ],
                 ),
               ),
@@ -178,6 +192,9 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
                   text: "تسجيل الدخول",
                   isLoading: _isLoading,
                   onTap: () {
+                    // Restore states to defaults
+                    context.read<RegisterCubit>().reset();
+                    context.read<ForgetPasswordCubit>().reset();
                     if (signInFormKey.currentState!.validate()) {
                       FocusScope.of(context).unfocus();
                       context.read<LoginCubit>().login(

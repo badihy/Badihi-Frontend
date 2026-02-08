@@ -511,9 +511,16 @@ const appLightColors = AppModeColorsExtension(
   borderSecondaryAlt: Color(0x14000000),
   bgPrimary: Color(0xFFFFFFFF),
   bgSecondary: Color(0xFFFAFAFA),
+  bgSecondary_hover: Color(0xFFF5F5F5),
+  fgBrandPrimaryAlt: Color(0xFF5F2F9D),
+  fgSecondaryHover: Color(0xFF30343E),
+  fgTertiaryHover: Color(0xFF414651),
+  textErrorPrimaryHover: Color(0xFFB42318),
   bgTertiary: Color(0xFFF5F5F5),
+  bgActive: Color(0xFFFAFAFA),
   bgQuaternary: Color(0xFFE9EAEB),
   bgBrandPrimary: Color(0xFFECE3F5),
+  bgBrandPrimaryAlt: Color(0xFFECE3F5),
   bgBrandSecondary: Color(0xFFDAC9EB),
   bgBrandSolid: Color(0xFF5F2F9D),
   bgBrandSolidHover: Color(0xFF4F2489),
@@ -534,7 +541,9 @@ const appLightColors = AppModeColorsExtension(
   fgSecondary: Color(0xFF414651),
   fgTertiary: Color(0xFF535862),
   fgQuaternary: Color(0xFFA4A7AE),
+  fgQuaternary_hover: Color(0xFF717680),
   fgDisabled: Color(0xFFA4A7AE),
+  fgDisabledSubtle: Color(0xFFD5D6D9),
   fgWhite: Color(0xFFFFFFFF),
   fgBrandPrimary: Color(0xFF5F2F9D),
   fgBrandSecondary: Color(0xFF6F3AB1),
@@ -565,10 +574,271 @@ const appLightColors = AppModeColorsExtension(
   alphaBlack80: Color(0xCC000000),
   alphaBlack90: Color(0xE6000000),
   alphaBlack100: Color(0xFF000000),
+  // New Utility Blue Colors
+  utilityBlue50: Color(0xFFEFF6FF),
+  utilityBlue100: Color(0xFFDBEAFE),
+  utilityBlue200: Color(0xFFBFDBFE),
+  utilityBlue300: Color(0xFF93C5FD),
+  utilityBlue400: Color(0xFF60A5FA),
+  utilityBlue500: Color(0xFF3B82F6),
+  utilityBlue600: Color(0xFF2563EB),
+  utilityBlue700: Color(0xFF1D4ED8),
+
+  // New Utility Brand Colors (based on existing brand colors)
+  utilityBrand50: Color(0xFFECE3F5),
+  utilityBrand100: Color(0xFFDAC9EB),
+  utilityBrand200: Color(0xFFC5A8E0),
+  utilityBrand300: Color(0xFFAF87D5),
+  utilityBrand400: Color(0xFF9966CA),
+  utilityBrand500: Color(0xFF8345BF),
+  utilityBrand600: Color(0xFF6F3AB1),
+  utilityBrand700: Color(0xFF5F2F9D),
+  utilityBrand800: Color(0xFF4F2489),
+  utilityBrand900: Color(0xFF3F1A75),
+  utilityBrand50Alt: Color(0xFFECE3F5),
+  utilityBrand100Alt: Color(0xFFDAC9EB),
+  utilityBrand200Alt: Color(0xFFC5A8E0),
+  utilityBrand300Alt: Color(0xFFAF87D5),
+  utilityBrand400Alt: Color(0xFF9966CA),
+  utilityBrand500Alt: Color(0xFF8345BF),
+  utilityBrand600Alt: Color(0xFF6F3AB1),
+  utilityBrand700Alt: Color(0xFF5F2F9D),
+  utilityBrand800Alt: Color(0xFF4F2489),
+  utilityBrand900Alt: Color(0xFF3F1A75),
+
+  // New Utility Gray Colors (matching existing text/background colors)
+  utilityGray50: Color(0xFFFAFAFA),
+  utilityGray100: Color(0xFFF5F5F5),
+  utilityGray200: Color(0xFFE9EAEB),
+  utilityGray300: Color(0xFFD5D7DA),
+  utilityGray400: Color(0xFFA4A7AE),
+  utilityGray500: Color(0xFF717680),
+  utilityGray600: Color(0xFF535862),
+  utilityGray700: Color(0xFF414651),
+  utilityGray800: Color(0xFF30343E),
+  utilityGray900: Color(0xFF181D27),
+
+  // New Utility Error Colors (based on existing error colors)
+  utilityError50: Color(0xFFFEF3F2),
+  utilityError100: Color(0xFFFEE4E2),
+  utilityError200: Color(0xFFFECDCA),
+  utilityError300: Color(0xFFFDA29B),
+  utilityError400: Color(0xFFF97066),
+  utilityError500: Color(0xFFF04438),
+  utilityError600: Color(0xFFD92D20),
+  utilityError700: Color(0xFFB42318),
+
+  // New Utility Warning Colors (based on existing warning colors)
+  utilityWarning50: Color(0xFFFFFAEB),
+  utilityWarning100: Color(0xFFFEF0C7),
+  utilityWarning200: Color(0xFFFEDF89),
+  utilityWarning300: Color(0xFFFEC84B),
+  utilityWarning400: Color(0xFFFDB022),
+  utilityWarning500: Color(0xFFF79009),
+  utilityWarning600: Color(0xFFDC6803),
+  utilityWarning700: Color(0xFFB54708),
+
+  // New Utility Success Colors (based on existing success colors)
+  utilitySuccess50: Color(0xFFECFDF3),
+  utilitySuccess100: Color(0xFFDCFAE6),
+  utilitySuccess200: Color(0xFFABEFC6),
+  utilitySuccess300: Color(0xFF75E0A7),
+  utilitySuccess400: Color(0xFF47CD89),
+  utilitySuccess500: Color(0xFF17B26A),
+  utilitySuccess600: Color(0xFF079455),
+  utilitySuccess700: Color(0xFF067647),
+
+  // New Utility Orange Colors
+  utilityOrange50: Color(0xFFFFFAF5),
+  utilityOrange100: Color(0xFFFFF0E6),
+  utilityOrange200: Color(0xFFFFE0CC),
+  utilityOrange300: Color(0xFFFFD1B3),
+  utilityOrange400: Color(0xFFFFB380),
+  utilityOrange500: Color(0xFFFF944D),
+  utilityOrange600: Color(0xFFFF751A),
+  utilityOrange700: Color(0xFFE65C00),
+
+  // New Utility Blue Dark Colors
+  utilityBlueDark50: Color(0xFFE6F0FF),
+  utilityBlueDark100: Color(0xFFCCE0FF),
+  utilityBlueDark200: Color(0xFF99C2FF),
+  utilityBlueDark300: Color(0xFF66A3FF),
+  utilityBlueDark400: Color(0xFF3385FF),
+  utilityBlueDark500: Color(0xFF0066FF),
+  utilityBlueDark600: Color(0xFF0052CC),
+  utilityBlueDark700: Color(0xFF003D99),
+
+  // New Utility Indigo Colors
+  utilityIndigo50: Color(0xFFF0F4FF),
+  utilityIndigo100: Color(0xFFE0E8FF),
+  utilityIndigo200: Color(0xFFC7D2FE),
+  utilityIndigo300: Color(0xFFA5B4FC),
+  utilityIndigo400: Color(0xFF818CF8),
+  utilityIndigo500: Color(0xFF6366F1),
+  utilityIndigo600: Color(0xFF4F46E5),
+  utilityIndigo700: Color(0xFF4338CA),
+
+  // New Utility Fuchsia Colors
+  utilityFuchsia50: Color(0xFFFDF4FF),
+  utilityFuchsia100: Color(0xFFFAE8FF),
+  utilityFuchsia200: Color(0xFFF5D0FE),
+  utilityFuchsia300: Color(0xFFF0ABFC),
+  utilityFuchsia400: Color(0xFFE879F9),
+  utilityFuchsia500: Color(0xFFD946EF),
+  utilityFuchsia600: Color(0xFFC026D3),
+  utilityFuchsia700: Color(0xFFA21CAF),
+
+  // New Utility Pink Colors
+  utilityPink50: Color(0xFFFDF2F8),
+  utilityPink100: Color(0xFFFCE7F3),
+  utilityPink200: Color(0xFFFBCFE8),
+  utilityPink300: Color(0xFFF9A8D4),
+  utilityPink400: Color(0xFFF472B6),
+  utilityPink500: Color(0xFFEC4899),
+  utilityPink600: Color(0xFFDB2777),
+  utilityPink700: Color(0xFFBE185D),
+
+  // New Utility Purple Colors
+  utilityPurple50: Color(0xFFFAF5FF),
+  utilityPurple100: Color(0xFFF3E8FF),
+  utilityPurple200: Color(0xFFE9D5FF),
+  utilityPurple300: Color(0xFFD8B4FE),
+  utilityPurple400: Color(0xFFC084FC),
+  utilityPurple500: Color(0xFFA855F7),
+  utilityPurple600: Color(0xFF9333EA),
+  utilityPurple700: Color(0xFF7E22CE),
+
+  // New Utility Orange Dark Colors
+  utilityOrangeDark50: Color(0xFFFFF7ED),
+  utilityOrangeDark100: Color(0xFFFFEDD5),
+  utilityOrangeDark200: Color(0xFFFED7AA),
+  utilityOrangeDark300: Color(0xFFFDBA74),
+  utilityOrangeDark400: Color(0xFFFB923C),
+  utilityOrangeDark500: Color(0xFFF97316),
+  utilityOrangeDark600: Color(0xFFEA580C),
+  utilityOrangeDark700: Color(0xFFC2410C),
+
+  // New Utility Blue Light Colors
+  utilityBlueLight50: Color(0xFFF0F9FF),
+  utilityBlueLight100: Color(0xFFE0F2FE),
+  utilityBlueLight200: Color(0xFFBAE6FD),
+  utilityBlueLight300: Color(0xFF7DD3FC),
+  utilityBlueLight400: Color(0xFF38BDF8),
+  utilityBlueLight500: Color(0xFF0EA5E9),
+  utilityBlueLight600: Color(0xFF0284C7),
+  utilityBlueLight700: Color(0xFF0369A1),
+
+  // New Utility Gray Blue Colors
+  utilityGrayBlue50: Color(0xFFF8FAFC),
+  utilityGrayBlue100: Color(0xFFF1F5F9),
+  utilityGrayBlue200: Color(0xFFE2E8F0),
+  utilityGrayBlue300: Color(0xFFCBD5E1),
+  utilityGrayBlue400: Color(0xFF94A3B8),
+  utilityGrayBlue500: Color(0xFF64748B),
+  utilityGrayBlue600: Color(0xFF475569),
+  utilityGrayBlue700: Color(0xFF334155),
+
+  // New Utility Green Colors
+  utilityGreen50: Color(0xFFF0FDF4),
+  utilityGreen100: Color(0xFFDCFCE7),
+  utilityGreen200: Color(0xFFBBF7D0),
+  utilityGreen300: Color(0xFF86EFAC),
+  utilityGreen400: Color(0xFF4ADE80),
+  utilityGreen500: Color(0xFF22C55E),
+  utilityGreen600: Color(0xFF16A34A),
+  utilityGreen700: Color(0xFF15803D),
+
+  // New Utility Yellow Colors
+  utilityYellow50: Color(0xFFFEFCE8),
+  utilityYellow100: Color(0xFFFEF9C3),
+  utilityYellow200: Color(0xFFFEF08A),
+  utilityYellow300: Color(0xFFFDE047),
+  utilityYellow400: Color(0xFFFACC15),
+  utilityYellow500: Color(0xFFEAB308),
+  utilityYellow600: Color(0xFFCA8A04),
+  utilityYellow700: Color(0xFFA16207),
+
+  // Tooltips
+  tooltipSupportingText: Color(0xFFD5D7DA),
+  textEditorIconFg: Color(0xFFA4A7AE),
+  textEditorIconFgActive: Color(0xFF717680),
+  featuredIconLightFgBrand: Color(0xFF6F3AB1),
+  featuredIconLightFgGray: Color(0xFF717680),
+  featuredIconLightFgError: Color(0xFFD92D20),
+  featuredIconLightFgWarning: Color(0xFFDC6803),
+  featuredIconLightFgSuccess: Color(0xFF079455),
+  iconFgBrand: Color(0xFF6F3AB1),
+  iconFgBrandOnBrand: Color(0xFFC5A8E0),
+  sliderHandleBorder: Color(0xFF6F3AB1),
+  sliderHandleBg: Color(0xFFFFFFFF),
+  screenMockupBorder: Color(0xFF181D27),
+  footerButtonFg: Color(0xFFC5A8E0),
+  footerButtonFgHover: Color(0xFFFFFFFF),
+  appStoreBadgeBorder: Color(0xFFA6A6A6),
+  toggleButtonFgDisabled: Color(0xFFFAFAFA),
+  toggleBorder: Color(0xFFD5D7DA),
+  toggleSlimBorderPressed: Color(0xFF5F2F9D),
+  toggleSlimBorderPressedHover: Color(0xFF4F2489),
+  avatarStylesBgNeutral: Color(0xFFE0E0E0),
+  buttonPrimaryIcon: Color(0xFFAF87D5),
+  buttonPrimaryIconHover: Color(0xFFC5A8E0),
+  buttonDestructivePrimaryIcon: Color(0xFFFDA29B),
+  buttonDestructivePrimaryIconHover: Color(0xFFFECDCA),
+  // Add these missing colors to your appLightColors:
+
+// Text Colors
+  textSecondaryHover: Color(0xFF30343E), // Gray.800 equivalent
+  textTertiaryHover: Color(0xFF414651), // Gray.700 equivalent
+  textPrimaryOnBrand: Color(0xFFFFFFFF), // Base.white
+  textSecondaryOnBrand: Color(0xFFC5A8E0), // Brand.200 equivalent
+  textTertiaryOnBrand: Color(0xFFC5A8E0), // Brand.200 equivalent
+  textQuaternaryOnBrand: Color(0xFFAF87D5), // Brand.300 equivalent
+  textBrandSecondaryHover: Color(0xFF4F2489), // Brand.800 equivalent
+
+// Background Colors
+  bgSecondarySolid: Color(0xFF535862), // Gray.600 equivalent
+  bgPrimaryHover: Color(0xFFFAFAFA), // Gray.50 equivalent
+  bgPrimaryAlt: Color(0xFFFFFFFF), // Base.white
+  bgSecondaryAlt: Color(0xFFFAFAFA), // Gray.50 equivalent
+  bgSecondarySubtle: Color(0xFFFCFCFC), // Gray.25 equivalent (approximated)
+  bgBrandSection: Color(0xFF4F2489), // Brand.800 equivalent
+  bgBrandSectionSubtle: Color(0xFF5F2F9D), // Brand.700 equivalent
+  bgPrimarySolid: Color(0xFF0A0D12), // Gray.950 equivalent
+
+// Foreground Colors
+  fgBrandSecondaryAlt: Color(0xFF6F3AB1), // Same as fgBrandSecondary
+  fgBrandSecondaryHover: Color(0xFF6F3AB1), // Brand.600 equivalent
+
+// Shadow Colors
+  shadowXs: Color(0x0D0A0D12),
+  shadowSm01: Color(0x1A0A0D12),
+  shadowSm02: Color(0x1A0A0D12),
+  shadowMd01: Color(0x1A0A0D12),
+  shadowMd02: Color(0x0F0A0D12),
+  shadowLg01: Color(0x140A0D12),
+  shadowLg02: Color(0x080A0D12),
+  shadowLg03: Color(0x0A0A0D12),
+  shadowXl01: Color(0x140A0D12),
+  shadowXl02: Color(0x080A0D12),
+  shadowXl03: Color(0x0A0A0D12),
+  shadow2xl01: Color(0x2E0A0D12),
+  shadow2xl02: Color(0x0A0A0D12),
+  shadow3xl01: Color(0x240A0D12),
+  shadow3xl02: Color(0x0A0A0D12),
+  shadowSkeumorphicInner: Color(0x0D0A0D12),
+  shadowSkeumorphicInnerBorder: Color(0x2E0A0D12),
+
+// Portfolio Mockup Shadows
+  shadowMainCentreMd: Color(0x240A0D12),
+  shadowMainCentreLg: Color(0x2E0A0D12),
+  shadowOverlayLg: Color(0x1F0A0D12),
+  shadowGridMd: Color(0x140A0D12),
+
+// Alpha Colors
+  alphaWhite100: Color(0xFFFFFFFF),
 );
 
 const appDarkColors = AppModeColorsExtension(
-  // Text colors
   textPrimary: Color(0xFFF7F7F7),
   textSecondary: Color(0xFFCECFD2),
   textTertiary: Color(0xFF94979C),
@@ -585,8 +855,6 @@ const appDarkColors = AppModeColorsExtension(
   textErrorHover: Color(0xFFFDA29B),
   textWarningPrimary: Color(0xFFFDB022),
   textSuccessPrimary: Color(0xFF47CD89),
-
-  // Border colors
   borderPrimary: Color(0xFF373A41),
   borderSecondary: Color(0xFF22262F),
   borderTertiary: Color(0xFF22262F),
@@ -597,13 +865,14 @@ const appDarkColors = AppModeColorsExtension(
   borderSecondaryAlt: Color(0xFF22262F),
   borderError: Color(0xFFF97066),
   borderErrorSubtle: Color(0xFFF04438),
-
-  // Background colors
   bgPrimary: Color(0xFF12151B),
   bgSecondary: Color(0xFF13161B),
+  bgSecondary_hover: Color(0xFF22262F),
   bgTertiary: Color(0xFF22262F),
   bgQuaternary: Color(0xFF373A41),
+  bgActive: Color(0xFF22262F),
   bgBrandPrimary: Color(0xFF6F3AB1),
+  bgBrandPrimaryAlt: Color(0xFF12151B),
   bgBrandSecondary: Color(0xFF5F2F9D),
   bgBrandSolid: Color(0xFF5F2F9D),
   bgBrandSolidHover: Color(0xFF6F3AB1),
@@ -620,13 +889,13 @@ const appDarkColors = AppModeColorsExtension(
   bgDisabled: Color(0xFF22262F),
   bgDisabledSubtle: Color(0xFF13161B),
   bgOverlay: Color(0xFF22262F),
-
-  // Foreground colors
   fgPrimary: Color(0xFFFFFFFF),
   fgSecondary: Color(0xFFCECFD2),
   fgTertiary: Color(0xFF94979C),
   fgQuaternary: Color(0xFF61656C),
+  fgQuaternary_hover: Color(0xFF85888E),
   fgDisabled: Color(0xFF85888E),
+  fgDisabledSubtle: Color(0xFF61646C),
   fgWhite: Color(0xFFFFFFFF),
   fgBrandPrimary: Color(0xFF6F3AB1),
   fgBrandSecondary: Color(0xFF6F3AB1),
@@ -636,12 +905,8 @@ const appDarkColors = AppModeColorsExtension(
   fgWarningSecondary: Color(0xFFFDB022),
   fgSuccessPrimary: Color(0xFF17B26A),
   fgSuccessSecondary: Color(0xFF47CD89),
-
-  // Effects
   focusRing: Color(0xFF6F3AB1),
   focusRingError: Color(0xFFF04438),
-
-  // Alpha colors
   alphaWhite90: Color(0xE6FFFFFF),
   alphaWhite80: Color(0xCCFFFFFF),
   alphaWhite70: Color(0xB3FFFFFF),
@@ -651,7 +916,6 @@ const appDarkColors = AppModeColorsExtension(
   alphaWhite30: Color(0x4DFFFFFF),
   alphaWhite20: Color(0x33FFFFFF),
   alphaWhite10: Color(0x1AFFFFFF),
-
   alphaBlack10: Color(0x1A000000),
   alphaBlack20: Color(0x33000000),
   alphaBlack30: Color(0x4D000000),
@@ -662,4 +926,236 @@ const appDarkColors = AppModeColorsExtension(
   alphaBlack80: Color(0xCC000000),
   alphaBlack90: Color(0xE6000000),
   alphaBlack100: Color(0xFF000000),
+  utilityBlue50: Color(0xFF0A1A2F),
+  utilityBlue100: Color(0xFF0F2442),
+  utilityBlue200: Color(0xFF1E3A8A),
+  utilityBlue300: Color(0xFF3B82F6),
+  utilityBlue400: Color(0xFF2563EB),
+  utilityBlue500: Color(0xFF3B82F6),
+  utilityBlue600: Color(0xFF60A5FA),
+  utilityBlue700: Color(0xFF93C5FD),
+  utilityBrand50: Color(0xFF181D27),
+  utilityBrand100: Color(0xFF22262F),
+  utilityBrand200: Color(0xFF373A41),
+  utilityBrand300: Color(0xFF8E57C1),
+  utilityBrand400: Color(0xFF6F3AB1),
+  utilityBrand500: Color(0xFF5F2F9D),
+  utilityBrand600: Color(0xFF9966CA),
+  utilityBrand700: Color(0xFFAF87D5),
+  utilityBrand800: Color(0xFFC5A8E0),
+  utilityBrand900: Color(0xFFDAC9EB),
+  utilityBrand50Alt: Color(0xFF181D27),
+  utilityBrand100Alt: Color(0xFF22262F),
+  utilityBrand200Alt: Color(0xFF373A41),
+  utilityBrand300Alt: Color(0xFF61656C),
+  utilityBrand400Alt: Color(0xFF85888E),
+  utilityBrand500Alt: Color(0xFF94979C),
+  utilityBrand600Alt: Color(0xFFCECFD2),
+  utilityBrand700Alt: Color(0xFFF7F7F7),
+  utilityBrand800Alt: Color(0xFFCECFD2),
+  utilityBrand900Alt: Color(0xFFF7F7F7),
+  utilityGray50: Color(0xFF12151B),
+  utilityGray100: Color(0xFF13161B),
+  utilityGray200: Color(0xFF22262F),
+  utilityGray300: Color(0xFF22262F),
+  utilityGray400: Color(0xFF373A41),
+  utilityGray500: Color(0xFF61656C),
+  utilityGray600: Color(0xFF85888E),
+  utilityGray700: Color(0xFF94979C),
+  utilityGray800: Color(0xFFCECFD2),
+  utilityGray900: Color(0xFFF7F7F7),
+  utilityError50: Color(0xFF2A0D07),
+  utilityError100: Color(0xFF3A1109),
+  utilityError200: Color(0xFF55160C),
+  utilityError300: Color(0xFFF04438),
+  utilityError400: Color(0xFFD92D20),
+  utilityError500: Color(0xFFF04438),
+  utilityError600: Color(0xFFF97066),
+  utilityError700: Color(0xFFFDA29B),
+  utilityWarning50: Color(0xFF271104),
+  utilityWarning100: Color(0xFF351507),
+  utilityWarning200: Color(0xFF4E1D09),
+  utilityWarning300: Color(0xFFF79009),
+  utilityWarning400: Color(0xFFDC6803),
+  utilityWarning500: Color(0xFFF79009),
+  utilityWarning600: Color(0xFFFDB022),
+  utilityWarning700: Color(0xFFFEC84B),
+  utilitySuccess50: Color(0xFF022C1C),
+  utilitySuccess100: Color(0xFF043924),
+  utilitySuccess200: Color(0xFF053321),
+  utilitySuccess300: Color(0xFF17B26A),
+  utilitySuccess400: Color(0xFF079455),
+  utilitySuccess500: Color(0xFF17B26A),
+  utilitySuccess600: Color(0xFF47CD89),
+  utilitySuccess700: Color(0xFF75E0A7),
+  utilityOrange50: Color(0xFF2A1003),
+  utilityOrange100: Color(0xFF3A1604),
+  utilityOrange200: Color(0xFF552006),
+  utilityOrange300: Color(0xFFFF751A),
+  utilityOrange400: Color(0xFFE65C00),
+  utilityOrange500: Color(0xFFFF751A),
+  utilityOrange600: Color(0xFFFF944D),
+  utilityOrange700: Color(0xFFFFB380),
+  utilityBlueDark50: Color(0xFF001133),
+  utilityBlueDark100: Color(0xFF001A4D),
+  utilityBlueDark200: Color(0xFF003366),
+  utilityBlueDark300: Color(0xFF0066FF),
+  utilityBlueDark400: Color(0xFF0052CC),
+  utilityBlueDark500: Color(0xFF0066FF),
+  utilityBlueDark600: Color(0xFF3385FF),
+  utilityBlueDark700: Color(0xFF66A3FF),
+  utilityIndigo50: Color(0xFF1A1B3D),
+  utilityIndigo100: Color(0xFF25265A),
+  utilityIndigo200: Color(0xFF3738A6),
+  utilityIndigo300: Color(0xFF6366F1),
+  utilityIndigo400: Color(0xFF4F46E5),
+  utilityIndigo500: Color(0xFF6366F1),
+  utilityIndigo600: Color(0xFF818CF8),
+  utilityIndigo700: Color(0xFFA5B4FC),
+  utilityFuchsia50: Color(0xFF2D0A33),
+  utilityFuchsia100: Color(0xFF3D0E44),
+  utilityFuchsia200: Color(0xFF5A1466),
+  utilityFuchsia300: Color(0xFFD946EF),
+  utilityFuchsia400: Color(0xFFC026D3),
+  utilityFuchsia500: Color(0xFFD946EF),
+  utilityFuchsia600: Color(0xFFE879F9),
+  utilityFuchsia700: Color(0xFFF0ABFC),
+  utilityPink50: Color(0xFF2D0719),
+  utilityPink100: Color(0xFF3D0A22),
+  utilityPink200: Color(0xFF5A0E33),
+  utilityPink300: Color(0xFFEC4899),
+  utilityPink400: Color(0xFFDB2777),
+  utilityPink500: Color(0xFFEC4899),
+  utilityPink600: Color(0xFFF472B6),
+  utilityPink700: Color(0xFFF9A8D4),
+  utilityPurple50: Color(0xFF1A0B2D),
+  utilityPurple100: Color(0xFF250F3D),
+  utilityPurple200: Color(0xFF37155A),
+  utilityPurple300: Color(0xFFA855F7),
+  utilityPurple400: Color(0xFF9333EA),
+  utilityPurple500: Color(0xFFA855F7),
+  utilityPurple600: Color(0xFFC084FC),
+  utilityPurple700: Color(0xFFD8B4FE),
+  utilityOrangeDark50: Color(0xFF2A1000),
+  utilityOrangeDark100: Color(0xFF3A1600),
+  utilityOrangeDark200: Color(0xFF552000),
+  utilityOrangeDark300: Color(0xFFF97316),
+  utilityOrangeDark400: Color(0xFFEA580C),
+  utilityOrangeDark500: Color(0xFFF97316),
+  utilityOrangeDark600: Color(0xFFFB923C),
+  utilityOrangeDark700: Color(0xFFFDBA74),
+  utilityBlueLight50: Color(0xFF022235),
+  utilityBlueLight100: Color(0xFF033047),
+  utilityBlueLight200: Color(0xFF05456A),
+  utilityBlueLight300: Color(0xFF0EA5E9),
+  utilityBlueLight400: Color(0xFF0284C7),
+  utilityBlueLight500: Color(0xFF0EA5E9),
+  utilityBlueLight600: Color(0xFF38BDF8),
+  utilityBlueLight700: Color(0xFF7DD3FC),
+  utilityGrayBlue50: Color(0xFF0F172A),
+  utilityGrayBlue100: Color(0xFF1E293B),
+  utilityGrayBlue200: Color(0xFF334155),
+  utilityGrayBlue300: Color(0xFF64748B),
+  utilityGrayBlue400: Color(0xFF475569),
+  utilityGrayBlue500: Color(0xFF64748B),
+  utilityGrayBlue600: Color(0xFF94A3B8),
+  utilityGrayBlue700: Color(0xFFCBD5E1),
+  utilityGreen50: Color(0xFF022C15),
+  utilityGreen100: Color(0xFF043D1D),
+  utilityGreen200: Color(0xFF055428),
+  utilityGreen300: Color(0xFF22C55E),
+  utilityGreen400: Color(0xFF16A34A),
+  utilityGreen500: Color(0xFF22C55E),
+  utilityGreen600: Color(0xFF4ADE80),
+  utilityGreen700: Color(0xFF86EFAC),
+  utilityYellow50: Color(0xFF2D2800),
+  utilityYellow100: Color(0xFF3D3500),
+  utilityYellow200: Color(0xFF5A4D00),
+  utilityYellow300: Color(0xFFEAB308),
+  utilityYellow400: Color(0xFFCA8A04),
+  utilityYellow500: Color(0xFFEAB308),
+  utilityYellow600: Color(0xFFFACC15),
+  utilityYellow700: Color(0xFFFDE047),
+  tooltipSupportingText: Color(0xFF22262F),
+  textEditorIconFg: Color(0xFF85888E),
+  textEditorIconFgActive: Color(0xFFFFFFFF),
+  featuredIconLightFgBrand: Color(0xFFC5A8E0),
+  featuredIconLightFgGray: Color(0xFFCECFD2),
+  featuredIconLightFgError: Color(0xFFFECDCA),
+  featuredIconLightFgWarning: Color(0xFFFEDF89),
+  featuredIconLightFgSuccess: Color(0xFFABEFC6),
+  iconFgBrand: Color(0xFF85888E),
+  iconFgBrandOnBrand: Color(0xFF85888E),
+  sliderHandleBorder: Color(0xFF12151B),
+  sliderHandleBg: Color(0xFF6F3AB1),
+  screenMockupBorder: Color(0xFF22262F),
+  footerButtonFg: Color(0xFFCECFD2),
+  footerButtonFgHover: Color(0xFFF7F7F7),
+  appStoreBadgeBorder: Color(0xFFFFFFFF),
+  toggleButtonFgDisabled: Color(0xFF373A41),
+  toggleBorder: Colors.transparent,
+  toggleSlimBorderPressed: Colors.transparent,
+  toggleSlimBorderPressedHover: Colors.transparent,
+  avatarStylesBgNeutral: Color(0xFFE0E0E0),
+  buttonPrimaryIcon: Color(0xFFAF87D5),
+  buttonPrimaryIconHover: Color(0xFFC5A8E0),
+  buttonDestructivePrimaryIcon: Color(0xFFFDA29B),
+  buttonDestructivePrimaryIconHover: Color(0xFFFECDCA),
+  // Add these missing colors to your appDarkColors:
+
+// Text Colors
+  textSecondaryHover: Color(0xFFCECFD2), // Gray.200 equivalent
+  textTertiaryHover: Color(0xFFCECFD2), // Gray.300 equivalent
+  textPrimaryOnBrand: Color(0xFFF7F7F7), // Gray.50 equivalent
+  textSecondaryOnBrand: Color(0xFFCECFD2), // Gray.300 equivalent
+  textTertiaryOnBrand: Color(0xFF85888E), // Gray.400 equivalent
+  textQuaternaryOnBrand: Color(0xFF85888E), // Gray.400 equivalent
+  textBrandSecondaryHover: Color(0xFFCECFD2), // Gray.200 equivalent
+  textErrorPrimaryHover: Color(0xFFFDA29B), // Error.300 equivalent
+
+// Background Colors
+  bgSecondarySolid: Color(0xFF61656C), // Gray.600 equivalent
+  bgPrimaryHover: Color(0xFF22262F), // Gray.800 equivalent
+  bgPrimaryAlt: Color(0xFF13161B), // bg-secondary equivalent
+  bgSecondaryAlt: Color(0xFF12151B), // bg-primary equivalent
+  bgSecondarySubtle: Color(0xFF13161B), // Gray.900 equivalent
+  bgBrandSection: Color(0xFF13161B), // bg-secondary equivalent
+  bgBrandSectionSubtle: Color(0xFF12151B), // bg-primary equivalent
+  bgPrimarySolid: Color(0xFF13161B), // bg-secondary equivalent
+
+// Foreground Colors
+  fgBrandSecondaryAlt: Color(0xFF61656C), // Gray.600 equivalent
+  fgBrandSecondaryHover: Color(0xFF85888E), // Gray.500 equivalent
+  fgBrandPrimaryAlt: Color(0xFFCECFD2), // Gray.300 equivalent
+
+  fgSecondaryHover: Color(0xFFCECFD2),
+  fgTertiaryHover: Color(0xFFCECFD2),
+
+// Shadow Colors (mostly transparent in dark mode)
+  shadowXs: Colors.transparent,
+  shadowSm01: Colors.transparent,
+  shadowSm02: Colors.transparent,
+  shadowMd01: Colors.transparent,
+  shadowMd02: Colors.transparent,
+  shadowLg01: Colors.transparent,
+  shadowLg02: Colors.transparent,
+  shadowLg03: Colors.transparent,
+  shadowXl01: Colors.transparent,
+  shadowXl02: Colors.transparent,
+  shadowXl03: Colors.transparent,
+  shadow2xl01: Colors.transparent,
+  shadow2xl02: Colors.transparent,
+  shadow3xl01: Colors.transparent,
+  shadow3xl02: Colors.transparent,
+  shadowSkeumorphicInner: Color(0x0D0C0E12),
+  shadowSkeumorphicInnerBorder: Color(0x2E0C0E12),
+
+// Portfolio Mockup Shadows (transparent in dark mode)
+  shadowMainCentreMd: Colors.transparent,
+  shadowMainCentreLg: Colors.transparent,
+  shadowOverlayLg: Colors.transparent,
+  shadowGridMd: Colors.transparent,
+
+// Alpha Colors (with dark mode values)
+  alphaWhite100: Color(0xFF12151B), // Gray.950 equivalent
 );

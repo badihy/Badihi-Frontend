@@ -1,3 +1,4 @@
+import 'package:badihi/core/extensions/context_extensions.dart';
 import 'package:badihi/core/theme/app_tokens.dart';
 import 'package:badihi/cubit/auth/forget_password_cubit.dart';
 import 'package:badihi/cubit/auth/register_cubit.dart';
@@ -5,7 +6,6 @@ import 'package:badihi/presentation/components/custom_app_bar.dart';
 import 'package:badihi/presentation/components/custom_text_form_field.dart';
 import 'package:badihi/presentation/components/main_button.dart';
 import 'package:badihi/presentation/components/notification_toast.dart';
-import 'package:badihi/presentation/components/titles_text.dart';
 import 'package:badihi/presentation/screens/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -63,9 +63,16 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
             child: GestureDetector(
               child: Column(
                 children: [
-                  TitlesText(
-                      text: "أدخل بريدك الإلكتروني وسنرسل لك رابط التحقق لإعادة تعيين كلمة المرور",
-                      IsL_M_S: "L"),
+                  Text(
+                    'أدخل بريدك الإلكتروني وسنرسل لك رابط التحقق لإعادة تعيين كلمة المرور',
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: context.appColors.textSecondary,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                      height: 1.56,
+                    ),
+                  ),
                   SizedBox(height: AppSpacing.spacingXL),
                   Form(
                     key: forgetPasswordFormKey,
@@ -73,7 +80,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                       controller: forgetPasswordEmail,
                       labelText: "البريد الإلكتروني*",
                       placeholderText: "example@badihi.com",
-                      prefixIcon: "assets/images/icons/mail-01.svg",
+                      prefixIcon: "mail-01",
                       fieldname: "email",
                     ),
                   ),

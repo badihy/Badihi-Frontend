@@ -12,4 +12,14 @@ extension ExtString on String {
   bool get isValidPassword {
     return length >= 8;
   }
+
+  // 🔹 العنوان (مثلاً: 3 – 50 حرف)
+  bool get isValidTitle {
+    return trim().isNotEmpty && trim().length >= 3 && trim().length <= 50;
+  }
+
+  // 🔹 الوصف (مثلاً: على الأقل 10 أحرف)
+  bool get isValidDescription {
+    return trim().isNotEmpty && trim().length >= 10;
+  }
 }

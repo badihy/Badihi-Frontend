@@ -14,18 +14,24 @@ class CustomTextFormField extends StatefulWidget {
   final String prefixIcon;
   final String? suffixIcon;
   final String fieldname;
+  final String defaultValue;
   final bool isPasswordField;
+  final bool isEnabled;
+  final bool isTextArea;
   final TextEditingController controller;
 
   const CustomTextFormField({
     super.key,
     required this.labelText,
     required this.placeholderText,
-    required this.prefixIcon,
+    this.prefixIcon = "",
     this.suffixIcon,
     this.fieldname = 'email',
     this.isPasswordField = false,
+    this.isEnabled = true,
+    this.isTextArea = false,
     required this.controller,
+    this.defaultValue = "",
   });
 
   @override
@@ -39,6 +45,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   void initState() {
     super.initState();
+
+    widget.controller.text = widget.defaultValue;
 
     // Clear error as soon as user types
     widget.controller.addListener(() {
@@ -85,6 +93,26 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
     return null;
   }
 
+  String? problemTitleValidator(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'يرجى إدخال عنوان المشكلة';
+    }
+    if (!value.isValidTitle) {
+      return 'العنوان يجب أن يكون بين 3 و 50 حرف';
+    }
+    return null;
+  }
+
+  String? problemDescriptionValidator(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'يرجى إدخال وصف المشكلة';
+    }
+    if (!value.isValidDescription) {
+      return 'الوصف يجب أن لا يقل عن 10 أحرف';
+    }
+    return null;
+  }
+
   // Select validator based on fieldname
   String? Function(String?)? getValidator() {
     switch (widget.fieldname) {
@@ -94,6 +122,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         return passwordValidator;
       case 'name':
         return nameValidator;
+      case 'problemTitle':
+        return problemTitleValidator;
+      case 'problemDescription':
+        return problemDescriptionValidator;
       default:
         return null;
     }
@@ -125,6 +157,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           child: TextFormField(
             controller: widget.controller,
             obscureText: widget.isPasswordField && _isObscured,
+            enabled: widget.isEnabled,
+            minLines: widget.isTextArea ? 6 : 1,
+            maxLines: widget.isTextArea ? 12 : 1,
             validator: getValidator() != null
                 ? (value) {
                     final result = getValidator()!(value);
@@ -137,6 +172,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             decoration: InputDecoration(
               labelText: widget.placeholderText,
               floatingLabelBehavior: FloatingLabelBehavior.never,
+              alignLabelWithHint: true,
               labelStyle: TextStyle(
                 color: context.appColors.textPlaceholder,
                 fontSize: 16,
@@ -167,15 +203,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                 borderSide: BorderSide(width: 1, color: context.appColors.textErrorPrimary),
                 borderRadius: BorderRadius.circular(AppRadius.radiusMD),
               ),
-              prefixIcon: Padding(
-                padding: const EdgeInsets.all(12),
-                child: SvgPicture.asset(
-                  "assets/images/icons/${widget.prefixIcon}.svg",
-                  width: 20,
-                  height: 20,
-                  colorFilter: ColorFilter.mode(context.appColors.fgQuaternary, BlendMode.srcIn),
-                ),
-              ),
+              prefixIcon: widget.prefixIcon == ""
+                  ? null
+                  : Padding(
+                      padding: const EdgeInsets.all(14),
+                      child: SvgPicture.asset(
+                        "assets/images/icons/${widget.prefixIcon}.svg",
+                        width: 20,
+                        height: 20,
+                        colorFilter: ColorFilter.mode(context.appColors.fgQuaternary, BlendMode.srcIn),
+                      ),
+                    ),
               suffixIcon: _hasError
                   ? Padding(
                       padding: const EdgeInsets.all(12),
@@ -198,7 +236,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                           },
                         )
                       : null,
-              contentPadding: EdgeInsets.zero,
+              contentPadding: widget.prefixIcon == ""
+                  ? EdgeInsets.only(
+                      right: 14,
+                      top: AppSpacing.spacingLG,
+                    )
+                  : EdgeInsets.zero,
             ),
             cursorColor: context.appColors.textPrimary,
             style: TextStyle(

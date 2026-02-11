@@ -5,16 +5,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class SecondaryButton extends StatelessWidget {
   final String? text;
+  final Color textColor;
   final VoidCallback? onTap;
   final String? iconName;
   final Color iconColor;
+  final Color borderColor;
 
   const SecondaryButton({
     super.key,
     required this.text,
     required this.onTap,
     this.iconName = "",
+    this.textColor = Colors.transparent,
     this.iconColor = Colors.transparent,
+    this.borderColor = Colors.transparent,
   });
 
   @override
@@ -24,7 +28,7 @@ class SecondaryButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: AppSpacing.spacingLG),
           side: BorderSide(
-            color: context.appColors.borderPrimary,
+            color: borderColor != Colors.transparent ? borderColor : context.appColors.borderPrimary,
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppRadius.radiusMD),
@@ -45,7 +49,7 @@ class SecondaryButton extends StatelessWidget {
             Text(
               text!,
               style: TextStyle(
-                color: context.appColors.textSecondary,
+                color: textColor != Colors.transparent ? textColor : context.appColors.textSecondary,
                 fontWeight: FontWeight.w600,
                 fontSize: 16,
                 height: 1.50,

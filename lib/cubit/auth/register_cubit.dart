@@ -33,7 +33,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       );
 
       // currentUser = LoginModel.fromJson(response);
-      print("Here $response");
+      // print("Here $response");
 
       emit(RegisterSuccess());
     } on ServerException catch (e) {

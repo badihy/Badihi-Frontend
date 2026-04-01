@@ -1,3 +1,4 @@
+import 'package:badihi/core/api/end_points.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper {
@@ -33,5 +34,13 @@ class CacheHelper {
 
   Future<bool> remove(String key) async {
     return await _preferences.remove(key);
+  }
+
+  Future<void> clearUserData() async {
+    await _preferences.remove(ApiKey.token);
+    await _preferences.remove(ApiKey.id);
+    await _preferences.remove(ApiKey.fullName);
+    await _preferences.remove(ApiKey.username);
+    await _preferences.remove(ApiKey.email);
   }
 }

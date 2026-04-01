@@ -11,6 +11,7 @@ void showToast({
   toastification.show(
     padding: const EdgeInsets.all(0),
     context: context,
+    autoCloseDuration: Duration(seconds: 5),
     type: ToastificationType.success,
     style: ToastificationStyle.flat,
     backgroundColor: context.appColors.bgPrimary,

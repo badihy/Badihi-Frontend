@@ -29,7 +29,7 @@ class LoginModel {
 class LoginData {
   final String token;
   final String refreshToken;
-  final User user;
+  final LoginUser user;
 
   LoginData({
     required this.token,
@@ -41,7 +41,7 @@ class LoginData {
     return LoginData(
       token: json['token'],
       refreshToken: json['refreshToken'],
-      user: User.fromJson(json['user']),
+      user: LoginUser.fromJson(json['user']),
     );
   }
 
@@ -54,7 +54,7 @@ class LoginData {
   }
 }
 
-class User {
+class LoginUser {
   final String id;
   final String username;
   final String email;
@@ -62,7 +62,7 @@ class User {
   final bool isVerified;
   final String fullName;
 
-  User({
+  LoginUser({
     required this.id,
     required this.username,
     required this.email,
@@ -71,8 +71,8 @@ class User {
     required this.fullName,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
+  factory LoginUser.fromJson(Map<String, dynamic> json) {
+    return LoginUser(
       id: json['_id'],
       username: json['username'],
       email: json['email'],

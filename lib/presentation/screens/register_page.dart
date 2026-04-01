@@ -6,9 +6,11 @@ import 'package:badihi/presentation/components/custom_app_bar.dart';
 import 'package:badihi/presentation/components/custom_text_form_field.dart';
 import 'package:badihi/presentation/components/google_sign_in_button.dart';
 import 'package:badihi/presentation/components/main_button.dart';
+import 'package:badihi/presentation/components/notification_toast.dart';
 import 'package:badihi/presentation/components/or_divider.dart';
 import 'package:badihi/presentation/components/text_button.dart';
 import 'package:badihi/presentation/screens/home_controller.dart';
+import 'package:badihi/presentation/screens/landing_page.dart';
 import 'package:badihi/presentation/screens/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,16 @@ class _RegisterPageState extends State<RegisterPage> {
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         appBarTitle: 'إنشاء حساب جديد',
+        onPressed: () {
+          Navigator.pop(
+            context,
+            CupertinoPageRoute(
+              builder: (BuildContext context) {
+                return LandingPage();
+              },
+            ),
+          );
+        },
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -52,6 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
               );
             } else if (state is RegisterFailure) {
               registerFormKey.currentState!.validate();
+              showToast(context: context, message: state.errMessage, isError: true);
             } else if (state is RegisterLoading) {
               setState(() {
                 _isLoading = true;

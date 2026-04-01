@@ -1,6 +1,8 @@
 import 'package:badihi/core/extensions/context_extensions.dart';
 import 'package:badihi/core/theme/app_tokens.dart';
+import 'package:badihi/cubit/courses/get_all_courses_cubit.dart';
 import 'package:badihi/presentation/components/custom_app_bar.dart';
+import 'package:badihi/presentation/components/custom_circular_progress_indicator.dart';
 import 'package:badihi/presentation/components/dashed_border_container.dart';
 import 'package:badihi/presentation/components/course_card.dart';
 import 'package:badihi/presentation/components/main_button.dart';
@@ -9,10 +11,22 @@ import 'package:badihi/presentation/screens/home_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<GetAllCoursesCubit>().getAllCourses();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +37,19 @@ class HomePage extends StatelessWidget {
         appBarTitle: "الرئيسية",
       ),
       body: Container(
-        margin: const EdgeInsets.fromLTRB(
-          AppSpacing.spacing2XL,
-          AppSpacing.spacing2XL,
-          AppSpacing.spacing2XL,
-          AppSpacing.spacing4XL,
+        margin: const EdgeInsets.only(
+          bottom: AppSpacing.spacing4XL,
         ),
         child: ListView(
           children: [
             Container(
               width: double.infinity,
+              margin: const EdgeInsets.fromLTRB(
+                AppSpacing.spacing2XL,
+                AppSpacing.spacing2XL,
+                AppSpacing.spacing2XL,
+                0,
+              ),
               padding: const EdgeInsets.all(AppSpacing.spacingXL),
               decoration: ShapeDecoration(
                 color: context.appColors.bgPrimary,
@@ -72,15 +89,27 @@ class HomePage extends StatelessWidget {
                   IntrinsicWidth(
                     child: MainButton(
                       text: "ابدأ دورة جديدة مجاناً",
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (BuildContext context) {
+                              return HomeController(selectedPage: 1);
+                            },
+                          ),
+                        );
+                      },
                     ),
                   )
                 ],
               ),
             ),
             SizedBox(height: AppSpacing.spacing2XL),
-            GestureDetector(
-              onTap: () {},
+            Container(
+              margin: const EdgeInsets.symmetric(
+                vertical: 0,
+                horizontal: AppSpacing.spacing2XL,
+              ),
               child: Row(
                 children: [
                   Text(
@@ -132,36 +161,56 @@ class HomePage extends StatelessWidget {
               ),
             ),
             SizedBox(height: AppSpacing.spacingMD),
-            CarouselSlider(
-              items: [1, 2, 3]
-                  .map(
-                    (e) => GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (BuildContext context) {
-                              return CourseDetailsPage();
-                            },
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(left: AppSpacing.spacingXL),
-                        child: e > 1
-                            ? CourseCard(
-                                isBusiness: true,
-                              )
-                            : CourseCard(),
-                      ),
-                    ),
-                  )
-                  .toList(),
-              options: CarouselOptions(
-                height: 300,
-                enableInfiniteScroll: false,
-                viewportFraction: .75,
-                padEnds: false,
+            Container(
+              margin: const EdgeInsets.only(
+                right: AppSpacing.spacing2XL,
+              ),
+              child: BlocBuilder<GetAllCoursesCubit, GetAllCoursesState>(
+                builder: (context, state) {
+                  return state is GetAllCoursesLoading
+                      ? Center(child: CustomCircularProgressIndicator())
+                      : state is GetAllCoursesSuccess
+                          ? CarouselSlider(
+                              items: state.allCourses.data
+                                  .map(
+                                    (currentCourse) => GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                            builder: (BuildContext context) {
+                                              return CourseDetailsPage(
+                                                courseId: currentCourse.id,
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(left: AppSpacing.spacingXL),
+                                        child: CourseCard(
+                                          imageUrl: currentCourse.coverImage,
+                                          courseCategory: currentCourse.category.name,
+                                          courseShortDesc:
+                                              currentCourse.shortDescription ?? currentCourse.description,
+                                          courseDesc: currentCourse.description,
+                                          estimationTime: currentCourse.estimationTime,
+                                          isHomeCard: true,
+                                          courseFollowers: 640,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              options: CarouselOptions(
+                                height: 300,
+                                enableInfiniteScroll: false,
+                                viewportFraction: .75,
+                                padEnds: false,
+                              ),
+                            )
+                          : SizedBox();
+                },
               ),
             ),
           ],

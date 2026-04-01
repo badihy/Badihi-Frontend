@@ -18,6 +18,20 @@ class ApiInterceptor extends Interceptor {
 
   //   super.onRequest(options, handler);
   // }
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    final token = getIt<CacheHelper>().getString(ApiKey.token);
+
+    // Only attach token if it exists
+    if (token != null && token.isNotEmpty) {
+      options.headers["Authorization"] = "Bearer $token";
+    }
+
+    // Attach CancelToken
+    options.cancelToken = cancelToken;
+
+    super.onRequest(options, handler);
+  }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {

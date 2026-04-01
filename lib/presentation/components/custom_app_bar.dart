@@ -7,12 +7,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String appBarTitle;
   final bool isBasicBar;
   final bool isHomeBar;
-  const CustomAppBar({
-    super.key,
-    required this.appBarTitle,
-    this.isBasicBar = true,
-    this.isHomeBar = false,
-  });
+  final VoidCallback? onPressed;
+  const CustomAppBar(
+      {super.key, required this.appBarTitle, this.isBasicBar = true, this.isHomeBar = false, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 'assets/images/icons/arrow-narrow-right.svg',
                 colorFilter: ColorFilter.mode(context.appColors.fgPrimary, BlendMode.srcIn),
               ),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: onPressed ?? () => Navigator.of(context).pop(),
             )
           : null,
       elevation: 0,

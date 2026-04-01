@@ -89,7 +89,22 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
 
   String? nameValidator(String? value) {
     if (value == null || value.isEmpty) return 'يرجى إدخال الاسم';
-    if (!value.isValidName) return 'تأكد من إدخال إسم صحيح';
+    if (!value.isValidName)
+      return 'الاسم يجب أن يتكون من 3 إلى 30 حرفًا، ويحتوي على أحرف عربية أو إنجليزية فقط بدون أرقام أو رموز.';
+    return null;
+  }
+
+  String? usernameValidator(String? value) {
+    final username = value?.trim();
+
+    if (username == null || username.isEmpty) {
+      return 'يرجى إدخال اسم المستخدم';
+    }
+
+    if (!username.isValidUsername) {
+      return 'اسم المستخدم غير صالح. استخدم 3-20 حرفًا، أرقام أو _ فقط';
+    }
+
     return null;
   }
 
@@ -122,6 +137,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         return passwordValidator;
       case 'name':
         return nameValidator;
+      case 'username':
+        return usernameValidator;
       case 'problemTitle':
         return problemTitleValidator;
       case 'problemDescription':
@@ -149,9 +166,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         BlocListener<LoginCubit, LoginState>(
           listener: (context, state) {
             if (state is LoginFailure) {
-              setState(() {
-                _hasError = true;
-              });
+              setState(
+                () {
+                  _hasError = true;
+                },
+              );
             }
           },
           child: TextFormField(
@@ -170,9 +189,12 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                   }
                 : null,
             decoration: InputDecoration(
+              errorMaxLines: 3,
               labelText: widget.placeholderText,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               alignLabelWithHint: true,
+              filled: widget.isEnabled ? false : true,
+              fillColor: widget.isEnabled ? Colors.transparent : context.appColors.bgDisabledSubtle,
               labelStyle: TextStyle(
                 color: context.appColors.textPlaceholder,
                 fontSize: 16,

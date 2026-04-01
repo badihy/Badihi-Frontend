@@ -12,6 +12,7 @@ import 'package:badihi/presentation/components/or_divider.dart';
 import 'package:badihi/presentation/components/text_button.dart';
 import 'package:badihi/presentation/screens/forget_password_page.dart';
 import 'package:badihi/presentation/screens/home_controller.dart';
+import 'package:badihi/presentation/screens/landing_page.dart';
 import 'package:badihi/presentation/screens/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +58,16 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         appBarTitle: 'تسجيل الدخول إلى حسابك',
+        onPressed: () {
+          Navigator.pop(
+            context,
+            CupertinoPageRoute(
+              builder: (BuildContext context) {
+                return LandingPage();
+              },
+            ),
+          );
+        },
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),

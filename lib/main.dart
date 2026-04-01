@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:badihi/core/api/api_consumer.dart';
 import 'package:badihi/core/api/dio_consumer.dart';
 import 'package:badihi/core/cache/cache_helper.dart';
@@ -8,8 +7,13 @@ import 'package:badihi/cubit/auth/forget_password_cubit.dart';
 import 'package:badihi/cubit/auth/login_cubit.dart';
 import 'package:badihi/cubit/auth/register_cubit.dart';
 import 'package:badihi/core/services/firebase_options.dart';
+import 'package:badihi/cubit/categories/get_all_categories_cubit.dart';
+import 'package:badihi/cubit/courses/get_all_courses_cubit.dart';
+import 'package:badihi/cubit/courses/get_course_by_id_cubit.dart';
 import 'package:badihi/cubit/theme/theme_cubit.dart';
 import 'package:badihi/cubit/theme/theme_state.dart';
+import 'package:badihi/cubit/users/delete_user_cubit.dart';
+import 'package:badihi/cubit/users/update_user_cubit.dart';
 import 'package:badihi/presentation/screens/home_controller.dart';
 import 'package:badihi/core/theme/theme.dart';
 import 'package:badihi/presentation/screens/reset_password_page.dart';
@@ -57,6 +61,26 @@ class Badihi extends StatelessWidget {
           BlocProvider(
             create: (context) =>
                 ForgetPasswordCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
+          ),
+          BlocProvider(
+            create: (context) =>
+                UpdateUserCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
+          ),
+          BlocProvider(
+            create: (context) =>
+                DeleteUserCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
+          ),
+          BlocProvider(
+            create: (context) =>
+                GetAllCoursesCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
+          ),
+          BlocProvider(
+            create: (context) =>
+                GetAllCategoriesCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
+          ),
+          BlocProvider(
+            create: (context) =>
+                GetCourseByIdCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
           ),
         ],
         child: BlocBuilder<ThemeCubit, ThemeState>(
@@ -114,7 +138,7 @@ class Badihi extends StatelessWidget {
                 GlobalWidgetsLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
               ],
-              home: SplashScreen(),
+              home: getIt<CacheHelper>().getString("token") != null ? HomeController() : SplashScreen(),
             );
           },
         ),

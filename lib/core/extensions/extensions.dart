@@ -9,6 +9,11 @@ extension ExtString on String {
     return nameRegex.hasMatch(this);
   }
 
+  bool get isValidUsername {
+    final usernameRegex = RegExp(r'^[a-zA-Z0-9_]{3,20}$');
+    return usernameRegex.hasMatch(this);
+  }
+
   bool get isValidPassword {
     return length >= 8;
   }

@@ -89,21 +89,17 @@ flutter:
     - assets/tokens/
 
   fonts:
-    - family: WathiqThuluth
+    - family: TheYearofHandicrafts
       fonts:
-        - asset: assets/fonts/itfWathiqThuluth-Light.otf
-          weight: 300
-        - asset: assets/fonts/itfWathiqThuluth-Regular.otf
+        - asset: assets/fonts/TheYearofHandicrafts-Regular.otf
           weight: 400
-        - asset: assets/fonts/itfWathiqThuluth-Medium.otf
+        - asset: assets/fonts/TheYearofHandicrafts-Medium.otf
           weight: 500
-        - asset: assets/fonts/itfWathiqThuluth-SemiBold.otf
+        - asset: assets/fonts/TheYearofHandicrafts-SemiBold.otf
           weight: 600
-        - asset: assets/fonts/itfWathiqThuluth-Bold.otf
+        - asset: assets/fonts/TheYearofHandicrafts-Bold.otf
           weight: 700
-        - asset: assets/fonts/itfWathiqThuluth-ExtraBold.otf
-          weight: 800
-        - asset: assets/fonts/itfWathiqThuluth-Black.otf
+        - asset: assets/fonts/TheYearofHandicrafts-Black.otf
           weight: 900
 
   # An image asset can refer to one or more resolution-specific "variants", see

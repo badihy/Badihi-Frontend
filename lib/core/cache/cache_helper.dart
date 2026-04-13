@@ -38,6 +38,7 @@ class CacheHelper {
 
   Future<void> clearUserData() async {
     await _preferences.remove(ApiKey.token);
+    await _preferences.remove(ApiKey.refreshToken);
     await _preferences.remove(ApiKey.id);
     await _preferences.remove(ApiKey.fullName);
     await _preferences.remove(ApiKey.username);

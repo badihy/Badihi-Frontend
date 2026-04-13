@@ -4,7 +4,9 @@ import 'package:badihi/presentation/components/google_sign_in_button.dart';
 import 'package:badihi/presentation/components/secondary_button.dart';
 import 'package:badihi/presentation/components/text_button.dart';
 import 'package:badihi/presentation/screens/login_page.dart';
+import 'package:badihi/presentation/screens/privacy_policy_page.dart';
 import 'package:badihi/presentation/screens/register_page.dart';
+import 'package:badihi/presentation/screens/terms_and_conditions_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -35,19 +37,8 @@ class _LandingPageState extends State<LandingPage> {
                   children: [
                     SvgPicture.asset(
                       'assets/images/logo2.svg',
-                      width: 48,
-                      height: 48,
-                    ),
-                    SizedBox(width: 12),
-                    Text(
-                      'بديهي',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: context.appColors.textBrandTertiary,
-                        fontSize: 40,
-                        fontWeight: FontWeight.w600,
-                        height: 1.20,
-                      ),
+                      width: 64,
+                      height: 64,
                     ),
                   ],
                 ),
@@ -77,6 +68,71 @@ class _LandingPageState extends State<LandingPage> {
             ),
             Column(
               children: [
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  textDirection: TextDirection.rtl,
+                  spacing: 4, // space between items
+                  children: [
+                    Text(
+                      'بإنشائك للحساب فإنك توافق على',
+                      style: TextStyle(
+                        color: context.appColors.textTertiary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        height: 1.43,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (_) => TermsAndConditionsPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'الشروط والأحكام',
+                        style: TextStyle(
+                          color: context.appColors.textBrandSecondary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                          height: 1.75,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      'و',
+                      style: TextStyle(
+                        color: context.appColors.textTertiary,
+                        fontSize: 16,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          CupertinoPageRoute(
+                            builder: (_) => PrivacyPolicyPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'سياسة الخصوصية',
+                        style: TextStyle(
+                          color: context.appColors.textBrandSecondary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                          height: 1.75,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: AppSpacing.spacingLG),
                 GoogleSignInButton(),
                 SizedBox(height: AppSpacing.spacingLG),
                 SecondaryButton(

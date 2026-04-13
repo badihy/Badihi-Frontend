@@ -2,7 +2,7 @@ import 'package:badihi/core/theme/app_tokens.dart';
 import 'package:flutter/material.dart';
 
 ThemeData lightMode = ThemeData(
-  fontFamily: "WathiqThuluth",
+  fontFamily: "TheYearofHandicrafts",
   scaffoldBackgroundColor: Colors.white,
   brightness: Brightness.light,
   extensions: <ThemeExtension<dynamic>>[
@@ -11,7 +11,7 @@ ThemeData lightMode = ThemeData(
 );
 
 ThemeData darkMode = ThemeData(
-  fontFamily: "WathiqThuluth",
+  fontFamily: "TheYearofHandicrafts",
   scaffoldBackgroundColor: Color(0xFF12151B),
   brightness: Brightness.dark,
   extensions: <ThemeExtension<dynamic>>[

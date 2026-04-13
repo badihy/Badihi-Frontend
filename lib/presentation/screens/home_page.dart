@@ -168,7 +168,10 @@ class _HomePageState extends State<HomePage> {
               child: BlocBuilder<GetAllCoursesCubit, GetAllCoursesState>(
                 builder: (context, state) {
                   return state is GetAllCoursesLoading
-                      ? Center(child: CustomCircularProgressIndicator())
+                      ? Container(
+                          margin: EdgeInsets.only(top: MediaQuery.sizeOf(context).height * 0.1),
+                          child: Center(child: CustomCircularProgressIndicator()),
+                        )
                       : state is GetAllCoursesSuccess
                           ? CarouselSlider(
                               items: state.allCourses.data
@@ -190,20 +193,21 @@ class _HomePageState extends State<HomePage> {
                                         margin: EdgeInsets.only(left: AppSpacing.spacingXL),
                                         child: CourseCard(
                                           imageUrl: currentCourse.coverImage,
-                                          courseCategory: currentCourse.category.name,
-                                          courseShortDesc:
-                                              currentCourse.shortDescription ?? currentCourse.description,
+                                          courseCategory: currentCourse.category?.name ?? "بدون تصنيف",
+                                          courseShortDesc: currentCourse.name ?? "عنوان الكورس غير متوفر",
                                           courseDesc: currentCourse.description,
                                           estimationTime: currentCourse.estimationTime,
                                           isHomeCard: true,
-                                          courseFollowers: 640,
+                                          courseFollowers: currentCourse.enrollmentsCount,
+                                          courseId: currentCourse.id,
+                                          isBookmarked: currentCourse.isBookmarked,
                                         ),
                                       ),
                                     ),
                                   )
                                   .toList(),
                               options: CarouselOptions(
-                                height: 300,
+                                height: 310,
                                 enableInfiniteScroll: false,
                                 viewportFraction: .75,
                                 padEnds: false,

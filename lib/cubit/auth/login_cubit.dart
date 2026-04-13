@@ -35,6 +35,9 @@ class LoginCubit extends Cubit<LoginState> {
       await getIt<CacheHelper>().setString(ApiKey.username, currentUser!.data.user.username);
       await getIt<CacheHelper>().setString(ApiKey.email, currentUser!.data.user.email);
 
+      print("Here 1: ${currentUser!.data.token}");
+      print("Here 2: ${currentUser!.data.refreshToken}");
+
       emit(LoginSuccess());
     } on ServerException catch (e) {
       emit(LoginFailure(errMessage: e.errModel.message));
@@ -55,10 +58,10 @@ class LoginCubit extends Cubit<LoginState> {
         },
       );
 
-      print("Here: $response");
       // currentUser = LoginModel.fromJson(response);
 
       await getIt<CacheHelper>().setString(ApiKey.token, currentUser!.data.token);
+      await getIt<CacheHelper>().setString(ApiKey.refreshToken, currentUser!.data.refreshToken);
       await getIt<CacheHelper>().setString(ApiKey.id, currentUser!.data.user.id);
       await getIt<CacheHelper>().setString(ApiKey.fullName, currentUser!.data.user.fullName);
       await getIt<CacheHelper>().setString(ApiKey.username, currentUser!.data.user.username);

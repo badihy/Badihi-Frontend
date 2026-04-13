@@ -5,11 +5,17 @@ import 'package:badihi/core/cache/cache_helper.dart';
 import 'package:badihi/core/services/service_locator.dart';
 import 'package:badihi/cubit/auth/forget_password_cubit.dart';
 import 'package:badihi/cubit/auth/login_cubit.dart';
+import 'package:badihi/cubit/auth/refresh_token_cubit.dart';
 import 'package:badihi/cubit/auth/register_cubit.dart';
 import 'package:badihi/core/services/firebase_options.dart';
+import 'package:badihi/cubit/bookmark/add_to_bookmarks_cubit.dart';
+import 'package:badihi/cubit/bookmark/delete_bookmark_cubit.dart';
+import 'package:badihi/cubit/bookmark/get_all_bookmarks_cubit.dart';
 import 'package:badihi/cubit/categories/get_all_categories_cubit.dart';
+import 'package:badihi/cubit/courses/enroll_user_in_a_course_cubit.dart';
 import 'package:badihi/cubit/courses/get_all_courses_cubit.dart';
 import 'package:badihi/cubit/courses/get_course_by_id_cubit.dart';
+import 'package:badihi/cubit/reports/report_problem_cubit.dart';
 import 'package:badihi/cubit/theme/theme_cubit.dart';
 import 'package:badihi/cubit/theme/theme_state.dart';
 import 'package:badihi/cubit/users/delete_user_cubit.dart';
@@ -47,40 +53,52 @@ class Badihi extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           RepositoryProvider<ApiConsumer>(
-            create: (context) => DioConsumer(dio: Dio()), // Create ApiConsumer first
+            create: (context) => DioConsumer(dio: Dio()),
           ),
           BlocProvider(
             create: (context) => ThemeCubit(),
           ),
           BlocProvider(
-            create: (context) => LoginCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
+            create: (context) => LoginCubit(context.read<ApiConsumer>()),
           ),
           BlocProvider(
-            create: (context) => RegisterCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
+            create: (context) => RegisterCubit(context.read<ApiConsumer>()),
           ),
           BlocProvider(
-            create: (context) =>
-                ForgetPasswordCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
+            create: (context) => ForgetPasswordCubit(context.read<ApiConsumer>()),
           ),
           BlocProvider(
-            create: (context) =>
-                UpdateUserCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
+            create: (context) => UpdateUserCubit(context.read<ApiConsumer>()),
           ),
           BlocProvider(
-            create: (context) =>
-                DeleteUserCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
+            create: (context) => DeleteUserCubit(context.read<ApiConsumer>()),
           ),
           BlocProvider(
-            create: (context) =>
-                GetAllCoursesCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
+            create: (context) => GetAllCoursesCubit(context.read<ApiConsumer>()),
           ),
           BlocProvider(
-            create: (context) =>
-                GetAllCategoriesCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
+            create: (context) => GetAllCategoriesCubit(context.read<ApiConsumer>()),
           ),
           BlocProvider(
-            create: (context) =>
-                GetCourseByIdCubit(context.read<ApiConsumer>()), // Pass ApiConsumer to UserCubit
+            create: (context) => GetCourseByIdCubit(context.read<ApiConsumer>()),
+          ),
+          BlocProvider(
+            create: (context) => AddToBookmarksCubit(context.read<ApiConsumer>()),
+          ),
+          BlocProvider(
+            create: (context) => GetAllBookmarksCubit(context.read<ApiConsumer>()),
+          ),
+          BlocProvider(
+            create: (context) => DeleteBookmarkCubit(context.read<ApiConsumer>()),
+          ),
+          BlocProvider(
+            create: (context) => ReportProblemCubit(context.read<ApiConsumer>()),
+          ),
+          BlocProvider(
+            create: (context) => EnrollUserInACourseCubit(context.read<ApiConsumer>()),
+          ),
+          BlocProvider(
+            create: (context) => RefreshTokenCubit(context.read<ApiConsumer>()),
           ),
         ],
         child: BlocBuilder<ThemeCubit, ThemeState>(

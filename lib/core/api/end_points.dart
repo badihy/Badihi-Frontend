@@ -19,8 +19,12 @@ class EndPoints {
     return "user/$id";
   }
 
+  static String updateUserProfile(id) {
+    return "user/$id/profile-image";
+  }
+
   static String getCourseDetails(id) {
-    return "courses/$id/chapters/lessons";
+    return "courses/$id";
   }
 
   static String enrollUserInCourse(courseId) {
@@ -57,4 +61,6 @@ class ApiKey {
   static String courseId = "courseId";
   static String subject = "subject";
   static String type = "type";
+  static String imageUrl = "imageUrl";
+  static String profileImage = "profileImage";
 }

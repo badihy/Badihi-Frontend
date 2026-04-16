@@ -61,6 +61,7 @@ class LoginUser {
   final String phone;
   final bool isVerified;
   final String fullName;
+  final String? profileImage; // Added profileImage field (optional)
 
   LoginUser({
     required this.id,
@@ -69,6 +70,7 @@ class LoginUser {
     required this.phone,
     required this.isVerified,
     required this.fullName,
+    this.profileImage, // Made optional
   });
 
   factory LoginUser.fromJson(Map<String, dynamic> json) {
@@ -79,6 +81,7 @@ class LoginUser {
       phone: json['phone'],
       isVerified: json['isVerified'],
       fullName: json['fullName'],
+      profileImage: json['profileImage'], // Added this line
     );
   }
 
@@ -90,6 +93,7 @@ class LoginUser {
       'phone': phone,
       'isVerified': isVerified,
       'fullName': fullName,
+      if (profileImage != null) 'profileImage': profileImage, // Only include if not null
     };
   }
 }

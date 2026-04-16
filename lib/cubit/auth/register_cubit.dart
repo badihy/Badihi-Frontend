@@ -1,6 +1,10 @@
 import 'package:badihi/core/api/api_consumer.dart';
 import 'package:badihi/core/api/end_points.dart';
+import 'package:badihi/core/cache/cache_helper.dart';
+import 'package:badihi/core/cache/cache_helper_keys.dart';
 import 'package:badihi/core/errors/exceptions.dart';
+import 'package:badihi/core/services/service_locator.dart';
+import 'package:badihi/presentation/models/login_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -9,6 +13,7 @@ part 'register_state.dart';
 class RegisterCubit extends Cubit<RegisterState> {
   final ApiConsumer api;
   RegisterCubit(this.api) : super(RegisterInitial());
+  LoginModel? currentUser;
 
   void reset() {
     emit(RegisterInitial()); // Reset to default state
@@ -27,13 +32,13 @@ class RegisterCubit extends Cubit<RegisterState> {
           ApiKey.fullName: registerFullName,
           ApiKey.email: registerEmail,
           ApiKey.password: registerPassword,
-          "passwordConfirm": registerPassword,
-          "phone": "0123456789"
+          ApiKey.passwordConfirm: registerPassword,
+          ApiKey.phone: "0123456789"
         },
       );
 
-      // currentUser = LoginModel.fromJson(response);
-      // print("Here $response");
+      currentUser = LoginModel.fromJson(response);
+      await getIt<CacheHelper>().saveUserSession(currentUser!);
 
       emit(RegisterSuccess());
     } on ServerException catch (e) {

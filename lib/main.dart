@@ -20,6 +20,7 @@ import 'package:badihi/cubit/theme/theme_cubit.dart';
 import 'package:badihi/cubit/theme/theme_state.dart';
 import 'package:badihi/cubit/users/delete_user_cubit.dart';
 import 'package:badihi/cubit/users/update_user_cubit.dart';
+import 'package:badihi/cubit/users/upload_profile_photo_cubit.dart';
 import 'package:badihi/presentation/screens/home_controller.dart';
 import 'package:badihi/core/theme/theme.dart';
 import 'package:badihi/presentation/screens/reset_password_page.dart';
@@ -99,6 +100,9 @@ class Badihi extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => RefreshTokenCubit(context.read<ApiConsumer>()),
+          ),
+          BlocProvider(
+            create: (context) => UploadProfilePhotoCubit(context.read<ApiConsumer>()),
           ),
         ],
         child: BlocBuilder<ThemeCubit, ThemeState>(

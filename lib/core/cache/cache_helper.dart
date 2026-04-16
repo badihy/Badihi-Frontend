@@ -1,4 +1,6 @@
 import 'package:badihi/core/api/end_points.dart';
+import 'package:badihi/core/services/service_locator.dart';
+import 'package:badihi/presentation/models/login_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper {
@@ -43,5 +45,17 @@ class CacheHelper {
     await _preferences.remove(ApiKey.fullName);
     await _preferences.remove(ApiKey.username);
     await _preferences.remove(ApiKey.email);
+  }
+
+  Future<void> saveUserSession(LoginModel currentUser) async {
+    final user = currentUser.data.user;
+
+    await getIt<CacheHelper>().setString(ApiKey.token, currentUser.data.token);
+    await getIt<CacheHelper>().setString(ApiKey.refreshToken, currentUser.data.refreshToken);
+    await getIt<CacheHelper>().setString(ApiKey.id, user.id);
+    await getIt<CacheHelper>().setString(ApiKey.fullName, user.fullName);
+    await getIt<CacheHelper>().setString(ApiKey.username, user.username);
+    await getIt<CacheHelper>().setString(ApiKey.email, user.email);
+    await getIt<CacheHelper>().setString(ApiKey.profileImage, user.profileImage ?? '');
   }
 }

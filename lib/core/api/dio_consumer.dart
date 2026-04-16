@@ -8,11 +8,12 @@ class DioConsumer extends ApiConsumer {
   final Dio dio;
 
   DioConsumer({required this.dio}) {
-    // Base URL
     dio.options.baseUrl = EndPoints.baseUrl;
-    dio.interceptors.add(ApiInterceptor());
+
+    // 🔥 Pass dio to interceptor
+    dio.interceptors.add(ApiInterceptor(dio));
+
     dio.interceptors.add(LogInterceptor(
-      // Will pring request and response details
       request: true,
       requestHeader: true,
       requestBody: true,
@@ -41,25 +42,6 @@ class DioConsumer extends ApiConsumer {
     }
   }
 
-  Future post(
-    String path, {
-    dynamic data,
-    Map<String, dynamic>? queryParameters,
-    bool isFormData = false,
-  }) async {
-    try {
-      final response = await dio.post(
-        path,
-        data: isFormData ? data : data,
-        queryParameters: queryParameters,
-      );
-      return response.data;
-    } on DioException catch (e) {
-      handleDioExceptions(e);
-    }
-  }
-
-  /*
   @override
   Future post(
     String path, {
@@ -78,8 +60,6 @@ class DioConsumer extends ApiConsumer {
       handleDioExceptions(e);
     }
   }
-
-   */
 
   @override
   Future patch(

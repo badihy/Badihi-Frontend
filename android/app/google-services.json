@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "862356448705",
+    "project_id": "badihi-329a6",
+    "storage_bucket": "badihi-329a6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862356448705:android:932849b3e95ceb32c53b40",
+        "android_client_info": {
+          "package_name": "com.badihi.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862356448705-4hr6bfh8r74td0pat2k7kribognk38ev.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.badihi.app",
+            "certificate_hash": "9f5562d2bfa8c3dc013bc3e33b6c84d1f943651a"
+          }
+        },
+        {
+          "client_id": "862356448705-msenvcibmj62fpuctnsfq8leafovehmr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJgmyk91QcsRym469E1vYrNRt6_kJmhSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "862356448705-ef58p8agverpmeggh7tidmnbg8ql3f6b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "862356448705-o89ut47ndbkbj5ifosv5bclqo5lr3bqi.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.badihi.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

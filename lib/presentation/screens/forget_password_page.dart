@@ -24,82 +24,87 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
   TextEditingController forgetPasswordEmail = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        appBarTitle: "استعادة كلمة المرور",
-      ),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
-          listener: (context, state) {
-            setState(() {
-              _isLoading = false;
-            });
-            if (state is ForgetPasswordSuccess) {
-              forgetPasswordEmail.clear();
-              showToast(
-                  context: context,
-                  message:
-                      "أرسلنا رابط استعادة كلمة المرور إلى بريدك الإلكتروني. افتح الرابط لإعادة تعيين كلمة المرور.");
-              Navigator.push(
-                context,
-                CupertinoPageRoute(builder: (_) => LoginPage()),
-              );
-            } else if (state is ForgetPasswordFailure) {
-              forgetPasswordFormKey.currentState!.validate();
-            } else if (state is ForgetPasswordLoading) {
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: CustomAppBar(
+          appBarTitle: "استعادة كلمة المرور",
+        ),
+        body: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: BlocListener<ForgetPasswordCubit, ForgetPasswordState>(
+            listener: (context, state) {
               setState(() {
-                _isLoading = true;
+                _isLoading = false;
               });
-            }
-          },
-          child: Container(
-            margin: const EdgeInsets.fromLTRB(
-              AppSpacing.spacing2XL,
-              AppSpacing.spacing2XL,
-              AppSpacing.spacing2XL,
-              AppSpacing.spacing4XL,
-            ),
-            child: GestureDetector(
-              child: Column(
-                children: [
-                  Text(
-                    'أدخل بريدك الإلكتروني وسنرسل لك رابط التحقق لإعادة تعيين كلمة المرور',
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      color: context.appColors.textSecondary,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
-                      height: 1.56,
+              if (state is ForgetPasswordSuccess) {
+                forgetPasswordEmail.clear();
+                showToast(
+                    context: context,
+                    message:
+                        "أرسلنا رابط استعادة كلمة المرور إلى بريدك الإلكتروني. افتح الرابط لإعادة تعيين كلمة المرور.");
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (_) => LoginPage()),
+                );
+              } else if (state is ForgetPasswordFailure) {
+                forgetPasswordFormKey.currentState!.validate();
+              } else if (state is ForgetPasswordLoading) {
+                setState(() {
+                  _isLoading = true;
+                });
+              }
+            },
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(
+                AppSpacing.spacing2XL,
+                AppSpacing.spacing2XL,
+                AppSpacing.spacing2XL,
+                AppSpacing.spacing4XL,
+              ),
+              child: GestureDetector(
+                child: Column(
+                  children: [
+                    Text(
+                      'أدخل بريدك الإلكتروني وسنرسل لك رابط التحقق لإعادة تعيين كلمة المرور',
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        color: context.appColors.textSecondary,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                        height: 1.56,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: AppSpacing.spacingXL),
-                  Form(
-                    key: forgetPasswordFormKey,
-                    child: CustomTextFormField(
-                      controller: forgetPasswordEmail,
-                      labelText: "البريد الإلكتروني*",
-                      placeholderText: "example@badihi.com",
-                      prefixIcon: "mail-01",
-                      fieldname: "email",
+                    SizedBox(height: AppSpacing.spacingXL),
+                    Form(
+                      key: forgetPasswordFormKey,
+                      child: CustomTextFormField(
+                        controller: forgetPasswordEmail,
+                        labelText: "البريد الإلكتروني*",
+                        placeholderText: "example@badihi.com",
+                        prefixIcon: "mail-01",
+                        fieldname: "email",
+                      ),
                     ),
-                  ),
-                  Spacer(),
-                  MainButton(
-                    text: "التالي",
-                    isLoading: _isLoading,
-                    onTap: () {
-                      // Restore states to defaults
-                      context.read<RegisterCubit>().reset();
-                      context.read<ForgetPasswordCubit>().reset();
-                      if (forgetPasswordFormKey.currentState!.validate()) {
-                        context.read<ForgetPasswordCubit>().forgetPassword(
-                              forgetPasswordEmail: forgetPasswordEmail.text,
-                            );
-                      }
-                    },
-                  )
-                ],
+                    Spacer(),
+                    MainButton(
+                      text: "التالي",
+                      isLoading: _isLoading,
+                      onTap: () {
+                        // Restore states to defaults
+                        context.read<RegisterCubit>().reset();
+                        context.read<ForgetPasswordCubit>().reset();
+                        if (forgetPasswordFormKey.currentState!.validate()) {
+                          context.read<ForgetPasswordCubit>().forgetPassword(
+                                forgetPasswordEmail: forgetPasswordEmail.text,
+                              );
+                        }
+                      },
+                    )
+                  ],
+                ),
               ),
             ),
           ),

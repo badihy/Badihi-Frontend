@@ -1,15 +1,17 @@
 class EndPoints {
-  static String baseUrl = "https://api.badihy.com/api/";
-  static String login = "auth/login";
-  static String refreshToken = "auth/refresh";
-  static String googleAuth = "auth/firebase-login";
-  static String forgetPassword = "auth/forgot-password";
-  static String resetPassword = "auth/reset-password";
-  static String register = "user";
-  static String getAllCourses = "courses";
-  static String getAllCategories = "categories";
-  static String addToBookmarks = "bookmarks";
-  static String reportProblem = "reports";
+  static const String baseUrl = "https://api.badihy.com/api/";
+  static const String login = "auth/login";
+  static const String refreshToken = "auth/refresh";
+  static const String googleAuth = "auth/mobile";
+  static const String googleAuthCallback = "auth/google/callback";
+  static const String forgetPassword = "auth/forgot-password";
+  static const String resetPassword = "auth/reset-password";
+  static const String register = "user";
+  static const String getAllCourses = "courses";
+  static const String getAllEnrolledCourses = "courses/enrolled";
+  static const String getAllCategories = "categories";
+  static const String addToBookmarks = "bookmarks";
+  static const String reportProblem = "reports";
 
   static String updateUser(id) {
     return "user/$id";
@@ -41,26 +43,27 @@ class EndPoints {
 }
 
 class ApiKey {
-  static String id = "_id";
-  static String fullName = "fullName";
-  static String name = "name";
-  static String username = "username";
-  static String email = "email";
-  static String password = "password";
-  static String passwordConfirm = "passwordConfirm";
-  static String phone = "phone";
-  static String newPassword = "newPassword";
-  static String confirmNewPassword = "confirmNewPassword";
-  static String token = "token";
-  static String refreshToken = "refreshToken";
-  static String uid = "uid";
-  static String success = "success";
-  static String message = "message";
-  static String data = "data";
-  static String userId = "userId";
-  static String courseId = "courseId";
-  static String subject = "subject";
-  static String type = "type";
-  static String imageUrl = "imageUrl";
-  static String profileImage = "profileImage";
+  static const String id = "_id";
+  static const String fullName = "fullName";
+  static const String name = "name";
+  static const String username = "username";
+  static const String email = "email";
+  static const String password = "password";
+  static const String passwordConfirm = "passwordConfirm";
+  static const String phone = "phone";
+  static const String newPassword = "newPassword";
+  static const String confirmNewPassword = "confirmNewPassword";
+  static const String token = "token";
+  static const String refreshToken = "refreshToken";
+  static const String uid = "uid";
+  static const String success = "success";
+  static const String message = "message";
+  static const String data = "data";
+  static const String userId = "userId";
+  static const String courseId = "courseId";
+  static const String subject = "subject";
+  static const String type = "type";
+  static const String imageUrl = "imageUrl";
+  static const String profileImage = "profileImage";
+  static const String idToken = "idToken";
 }

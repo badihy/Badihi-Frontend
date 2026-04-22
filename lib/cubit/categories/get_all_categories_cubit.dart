@@ -10,7 +10,7 @@ part 'get_all_categories_state.dart';
 class GetAllCategoriesCubit extends Cubit<GetAllCategoriesState> {
   GetAllCategoriesCubit(this.api) : super(GetAllCategoriesInitial());
   final ApiConsumer api;
-  GetAllCategoriesModel? allCourses;
+  GetAllCategories? allCourses;
   bool hasData = false;
 
   Future<void> getAllCategories() async {
@@ -21,7 +21,7 @@ class GetAllCategoriesCubit extends Cubit<GetAllCategoriesState> {
       emit(GetAllCategoriesLoading());
 
       final response = await api.get(EndPoints.getAllCategories);
-      allCourses = GetAllCategoriesModel.fromJson(response);
+      allCourses = GetAllCategories.fromJson(response);
 
       emit(GetAllCategoriesSuccess(allCategories: allCourses!));
       hasData = true;

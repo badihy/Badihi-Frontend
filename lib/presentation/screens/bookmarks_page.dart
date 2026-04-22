@@ -4,7 +4,6 @@ import 'package:badihi/cubit/bookmark/get_all_bookmarks_cubit.dart';
 import 'package:badihi/cubit/categories/get_all_categories_cubit.dart';
 import 'package:badihi/presentation/components/course_card.dart';
 import 'package:badihi/presentation/components/custom_app_bar.dart';
-import 'package:badihi/presentation/components/custom_circular_progress_indicator.dart';
 import 'package:badihi/presentation/components/filter_bar.dart';
 import 'package:badihi/presentation/components/main_button.dart';
 import 'package:badihi/presentation/components/notification_toast.dart';
@@ -14,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class BookmarksPage extends StatefulWidget {
   const BookmarksPage({super.key});
@@ -30,6 +30,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
   void initState() {
     super.initState();
     context.read<GetAllBookmarksCubit>().getAllBookmarks();
+    context.read<GetAllCategoriesCubit>().getAllCategories();
   }
 
   @override
@@ -59,13 +60,23 @@ class _BookmarksPageState extends State<BookmarksPage> {
                 }
               },
             ),
+            BlocListener<GetAllCategoriesCubit, GetAllCategoriesState>(
+              listener: (context, state) {
+                if (state is GetAllCategoriesFailure) {
+                  showToast(
+                    context: context,
+                    message: state.errMessage,
+                    isError: true,
+                  );
+                }
+              },
+            ),
           ],
           child: BlocBuilder<GetAllBookmarksCubit, GetAllBookmarksState>(
             builder: (context, bookmarksState) {
+              // Show skeleton while loading bookmarks
               if (bookmarksState is GetAllBookmarksLoading) {
-                return const Center(
-                  child: CustomCircularProgressIndicator(),
-                );
+                return _buildSkeletonLoading();
               }
 
               if (bookmarksState is! GetAllBookmarksSuccess) {
@@ -76,16 +87,15 @@ class _BookmarksPageState extends State<BookmarksPage> {
 
               return BlocBuilder<GetAllCategoriesCubit, GetAllCategoriesState>(
                 builder: (context, categoriesState) {
-                  if (categoriesState is GetAllCategoriesLoading) {
-                    return const Center(
-                      child: CustomCircularProgressIndicator(),
-                    );
+                  // Show skeleton while loading categories (if bookmarks exist)
+                  if (categoriesState is GetAllCategoriesLoading && allBookmarks.isNotEmpty) {
+                    return _buildSkeletonLoading();
                   }
 
                   List<dynamic> categories = [];
 
                   if (categoriesState is GetAllCategoriesSuccess) {
-                    categories = categoriesState.allCategories.data;
+                    categories = categoriesState.allCategories.data.data;
                   }
 
                   // Add "All" filter at index 0
@@ -152,11 +162,11 @@ class _BookmarksPageState extends State<BookmarksPage> {
                                 child: CourseCard(
                                   imageUrl: currentBookmark.course.coverImage ?? "",
                                   courseCategory: currentBookmark.course.category?.name ?? "بدون تصنيف",
-                                  courseShortDesc: currentBookmark.course.name ?? "عنوان الكورس غير متوفر",
+                                  courseShortDesc: currentBookmark.course.name,
                                   courseDesc: currentBookmark.course.description,
                                   estimationTime: currentBookmark.course.estimationTime,
                                   courseId: currentBookmark.course.id,
-                                  courseFollowers: 620,
+                                  courseFollowers: currentBookmark.course.enrollmentsCount,
                                   isBookmarked: true,
                                 ),
                               ),
@@ -170,6 +180,42 @@ class _BookmarksPageState extends State<BookmarksPage> {
             },
           ),
         ),
+      ),
+    );
+  }
+
+  // Skeleton loading widget for bookmarks
+  Widget _buildSkeletonLoading() {
+    return Skeletonizer(
+      enabled: true,
+      effect: const ShimmerEffect(
+        duration: Duration(seconds: 1),
+      ),
+      child: ListView(
+        children: [
+          // Skeleton FilterBar
+          const _SkeletonFilterBar(),
+
+          const SizedBox(height: AppSpacing.spacingXL),
+
+          // Skeleton bookmark cards (show 3-4 cards as placeholder)
+          ...List.generate(
+            3,
+            (index) => Container(
+              margin: const EdgeInsets.only(bottom: AppSpacing.spacingXL),
+              child: const CourseCard(
+                imageUrl: '',
+                courseCategory: 'تحميل التصنيف',
+                courseShortDesc: 'جاري تحميل اسم الدورة التدريبية',
+                courseDesc: 'جاري تحميل وصف الدورة التدريبية...',
+                estimationTime: '00:00',
+                courseId: '',
+                courseFollowers: 0,
+                isBookmarked: true, // Show bookmark icon in skeleton
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -200,7 +246,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
                 colorFilter: ColorFilter.mode(context.appColors.fgSecondaryHover, BlendMode.srcIn),
               ),
             ),
-            SizedBox(height: AppSpacing.spacingXL),
+            const SizedBox(height: AppSpacing.spacingXL),
             Text(
               'لا يوجد دورات محفوظة',
               style: TextStyle(
@@ -210,7 +256,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
                 height: 1.50,
               ),
             ),
-            SizedBox(height: AppSpacing.spacingMD),
+            const SizedBox(height: AppSpacing.spacingMD),
             Text(
               'ابدأ بتصفّح الدورات واحفظ ما يناسبك.',
               textAlign: TextAlign.center,
@@ -221,7 +267,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
                 height: 1.50,
               ),
             ),
-            SizedBox(height: AppSpacing.spacingXL),
+            const SizedBox(height: AppSpacing.spacingXL),
             IntrinsicWidth(
               child: MainButton(
                 text: "تصفح الدورات المتاحة",
@@ -271,7 +317,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
               color: context.appColors.fgSecondary,
             ),
           ),
-          SizedBox(height: AppSpacing.spacingXL),
+          const SizedBox(height: AppSpacing.spacingXL),
           Text(
             'لا توجد دورات في هذا التصنيف',
             style: TextStyle(
@@ -281,7 +327,7 @@ class _BookmarksPageState extends State<BookmarksPage> {
               height: 1.50,
             ),
           ),
-          SizedBox(height: AppSpacing.spacingMD),
+          const SizedBox(height: AppSpacing.spacingMD),
           Text(
             'جرب تصفية أخرى أو اطلع على جميع الدورات المحفوظة.',
             textAlign: TextAlign.center,
@@ -290,6 +336,81 @@ class _BookmarksPageState extends State<BookmarksPage> {
               fontSize: 16,
               fontWeight: FontWeight.w400,
               height: 1.50,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Skeleton Filter Bar Widget
+class _SkeletonFilterBar extends StatelessWidget {
+  const _SkeletonFilterBar();
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: const BouncingScrollPhysics(),
+      child: Row(
+        children: [
+          // "الكل" chip - usually the first one
+          Container(
+            margin: const EdgeInsets.only(right: AppSpacing.spacingSM),
+            child: ActionChip(
+              label: Text(
+                'الكل',
+                style: TextStyle(
+                  color: context.appColors.textSecondary,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              onPressed: null, // Disabled for skeleton
+              backgroundColor: context.appColors.bgPrimary,
+              side: BorderSide(
+                color: context.appColors.borderPrimary,
+                width: 1,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(32),
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.spacingMD,
+                vertical: AppSpacing.spacingXS,
+              ),
+            ),
+          ),
+
+          // Category chips skeleton
+          ...List.generate(
+            3,
+            (index) => Container(
+              margin: const EdgeInsets.only(right: AppSpacing.spacingSM),
+              child: ActionChip(
+                label: Text(
+                  'تحميل التصنيف',
+                  style: TextStyle(
+                    color: context.appColors.textSecondary,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                onPressed: null, // Disabled for skeleton
+                backgroundColor: context.appColors.bgPrimary,
+                side: BorderSide(
+                  color: context.appColors.borderPrimary,
+                  width: 1,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.spacingMD,
+                  vertical: AppSpacing.spacingXS,
+                ),
+              ),
             ),
           ),
         ],

@@ -59,6 +59,7 @@ class BookMarkCourse {
   final DateTime createdAt;
   final DateTime updatedAt;
   final int version;
+  final int enrollmentsCount; // ✅ NEW
 
   BookMarkCourse({
     required this.id,
@@ -78,6 +79,7 @@ class BookMarkCourse {
     required this.createdAt,
     required this.updatedAt,
     required this.version,
+    required this.enrollmentsCount,
   });
 
   factory BookMarkCourse.fromJson(Map<String, dynamic> json) {
@@ -95,14 +97,11 @@ class BookMarkCourse {
       targetAudience: List<String>.from(json['targetAudience'] ?? []),
       level: json['level'],
       category: json['category'] != null ? Category.fromJson(json['category']) : null,
-
-      // ✅ FIX: chapters are List<String>
       chapters: List<String>.from(json['chapters'] ?? []),
-
-      // ✅ NEW FIELDS
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
       version: json['__v'] ?? 0,
+      enrollmentsCount: json['enrollmentsCount'] ?? 0, // ✅ NEW
     );
   }
 }
@@ -112,12 +111,18 @@ class Category {
   final String name;
   final String description;
   final String? image;
+  final DateTime createdAt; // ✅ NEW
+  final DateTime updatedAt; // ✅ NEW
+  final int version; // ✅ NEW
 
   Category({
     required this.id,
     required this.name,
     required this.description,
     this.image,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.version,
   });
 
   factory Category.fromJson(Map<String, dynamic> json) {
@@ -126,6 +131,9 @@ class Category {
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       image: json['image'],
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
+      version: json['__v'] ?? 0,
     );
   }
 }

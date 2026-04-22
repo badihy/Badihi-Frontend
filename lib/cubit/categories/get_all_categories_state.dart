@@ -7,7 +7,7 @@ final class GetAllCategoriesInitial extends GetAllCategoriesState {}
 
 // GetAllCategories states
 final class GetAllCategoriesSuccess extends GetAllCategoriesState {
-  final GetAllCategoriesModel allCategories;
+  final GetAllCategories allCategories;
   GetAllCategoriesSuccess({required this.allCategories});
 }
 

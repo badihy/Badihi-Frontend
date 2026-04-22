@@ -1,9 +1,11 @@
 import 'package:badihi/core/extensions/context_extensions.dart';
 import 'package:badihi/core/theme/app_tokens.dart';
 import 'package:badihi/cubit/auth/forget_password_cubit.dart';
+import 'package:badihi/cubit/auth/google_auth_cubit.dart';
 import 'package:badihi/cubit/auth/login_cubit.dart';
 import 'package:badihi/cubit/auth/register_cubit.dart';
 import 'package:badihi/presentation/components/custom_app_bar.dart';
+import 'package:badihi/presentation/components/custom_circular_progress_indicator.dart';
 import 'package:badihi/presentation/components/custom_text_form_field.dart';
 import 'package:badihi/presentation/components/google_sign_in_button.dart';
 import 'package:badihi/presentation/components/main_button.dart';
@@ -54,169 +56,210 @@ class _LoginPageState extends State<LoginPage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: CustomAppBar(
-        appBarTitle: 'تسجيل الدخول إلى حسابك',
-        onPressed: () {
-          Navigator.pop(
-            context,
-            CupertinoPageRoute(
-              builder: (BuildContext context) {
-                return LandingPage();
-              },
-            ),
-          );
-        },
-      ),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        // Implement login logic
-        child: BlocListener<LoginCubit, LoginState>(
-          listener: (context, state) {
-            setState(() {
-              _isLoading = false;
-            });
-            if (state is LoginSuccess) {
-              signInFormKey.currentState?.reset();
-              loginEmail.clear();
-              loginPassword.clear();
-              Navigator.push(
-                context,
-                CupertinoPageRoute(builder: (_) => HomeController()),
-              );
-            } else if (state is LoginFailure) {
-              showToast(context: context, message: state.errMessage, isError: true);
-            } else if (state is LoginLoading) {
-              setState(() {
-                _isLoading = true;
-              });
-            }
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: CustomAppBar(
+          appBarTitle: 'تسجيل الدخول إلى حسابك',
+          onPressed: () {
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => LandingPage(),
+                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(1.0, 0.0); // من اليمين
+                  const end = Offset.zero;
+                  const curve = Curves.ease;
+
+                  final tween = Tween(begin: begin, end: end).chain(
+                    CurveTween(curve: curve),
+                  );
+
+                  return SlideTransition(
+                    position: animation.drive(tween),
+                    child: child,
+                  );
+                },
+              ),
+            );
           },
-          child: Stack(
-            children: [
-              Container(
-                margin: const EdgeInsets.fromLTRB(
-                  AppSpacing.spacing2XL,
-                  AppSpacing.spacing2XL,
-                  AppSpacing.spacing2XL,
-                  AppSpacing.spacing4XL,
-                ),
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'أدخل بريدك الإلكتروني وكلمة المرور لتسجيل الدخول إلى حسابك',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        color: context.appColors.textSecondary /* Colors-Text-text-secondary-(700) */,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        height: 1.56,
+        ),
+        body: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          // Implement login logic
+          child: MultiBlocListener(
+            listeners: [
+              BlocListener<LoginCubit, LoginState>(
+                listener: (context, state) {
+                  setState(() {
+                    _isLoading = false;
+                  });
+                  if (state is LoginSuccess) {
+                    signInFormKey.currentState?.reset();
+                    loginEmail.clear();
+                    loginPassword.clear();
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(builder: (_) => HomeController()),
+                    );
+                  } else if (state is LoginFailure) {
+                    showToast(context: context, message: state.errMessage, isError: true);
+                  } else if (state is LoginLoading) {
+                    setState(() {
+                      _isLoading = true;
+                    });
+                  }
+                },
+              ),
+              BlocListener<GoogleAuthCubit, GoogleAuthState>(
+                listener: (context, state) {
+                  if (state is GoogleAuthSuccess) {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(builder: (_) => HomeController()),
+                    );
+                  } else if (state is GoogleAuthFailure) {
+                    showToast(context: context, message: state.errMessage, isError: true);
+                  }
+                },
+              ),
+            ],
+            child: Stack(
+              children: [
+                Container(
+                  margin: const EdgeInsets.fromLTRB(
+                    AppSpacing.spacing2XL,
+                    AppSpacing.spacing2XL,
+                    AppSpacing.spacing2XL,
+                    AppSpacing.spacing4XL,
+                  ),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'أدخل بريدك الإلكتروني وكلمة المرور لتسجيل الدخول إلى حسابك',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          color: context.appColors.textSecondary /* Colors-Text-text-secondary-(700) */,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                          height: 1.56,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: AppSpacing.spacingXL),
-                    Form(
-                      key: signInFormKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      SizedBox(height: AppSpacing.spacingXL),
+                      Form(
+                        key: signInFormKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomTextFormField(
+                              controller: loginEmail,
+                              labelText: 'البريد الإلكتروني*',
+                              placeholderText: "example@badihi.com",
+                              prefixIcon: "mail-01",
+                              fieldname: 'email',
+                            ),
+                            SizedBox(height: AppSpacing.spacingXL),
+                            CustomTextFormField(
+                              controller: loginPassword,
+                              labelText: 'كلمة المرور*',
+                              placeholderText: "",
+                              prefixIcon: "passcode-lock",
+                              isPasswordField: true,
+                              fieldname: 'password',
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: AppSpacing.spacingSM),
+                      TextBtn(
+                        btnText: "هل نسيت كلمة المرور؟",
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            CupertinoPageRoute(
+                              builder: (BuildContext context) {
+                                return ForgetPasswordPage();
+                              },
+                            ),
+                          );
+                        },
+                        isLight: true,
+                      ),
+                      const Spacer(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CustomTextFormField(
-                            controller: loginEmail,
-                            labelText: 'البريد الإلكتروني*',
-                            placeholderText: "example@badihi.com",
-                            prefixIcon: "mail-01",
-                            fieldname: 'email',
+                          Text(
+                            'ليس لديك حساب؟',
+                            style: TextStyle(
+                              color: context.appColors.textSecondary,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              height: 1.50,
+                            ),
                           ),
-                          SizedBox(height: AppSpacing.spacingXL),
-                          CustomTextFormField(
-                            controller: loginPassword,
-                            labelText: 'كلمة المرور*',
-                            placeholderText: "",
-                            prefixIcon: "passcode-lock",
-                            isPasswordField: true,
-                            fieldname: 'password',
+                          TextBtn(
+                            btnText: "تسجيل حساب جديد",
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (BuildContext context) {
+                                    return RegisterPage();
+                                  },
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),
-                    ),
-                    SizedBox(height: AppSpacing.spacingSM),
-                    TextBtn(
-                      btnText: "هل نسيت كلمة المرور؟",
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (BuildContext context) {
-                              return ForgetPasswordPage();
-                            },
-                          ),
-                        );
-                      },
-                      isLight: true,
-                    ),
-                    const Spacer(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'ليس لديك حساب؟',
-                          style: TextStyle(
-                            color: context.appColors.textSecondary,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            height: 1.50,
-                          ),
-                        ),
-                        TextBtn(
-                          btnText: "تسجيل حساب جديد",
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              CupertinoPageRoute(
-                                builder: (BuildContext context) {
-                                  return RegisterPage();
-                                },
-                              ),
+                      SizedBox(height: AppSpacing.spacingLG),
+                      OrDivider(),
+                      SizedBox(height: AppSpacing.spacingLG),
+                      BlocBuilder<GoogleAuthCubit, GoogleAuthState>(
+                        builder: (context, state) {
+                          return state is GoogleAuthLoading
+                              ? Center(
+                                  child: CustomCircularProgressIndicator(),
+                                )
+                              : GoogleSignInButton(
+                                  isPrimary: false,
+                                );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                AnimatedPositioned(
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
+                  left: AppSpacing.spacing2XL,
+                  right: AppSpacing.spacing2XL,
+                  bottom: _keyboardHeight > 0 ? _keyboardHeight + AppSpacing.spacingLG : 175,
+                  child: MainButton(
+                    text: "تسجيل الدخول",
+                    isLoading: _isLoading,
+                    onTap: () {
+                      // Restore states to defaults
+                      context.read<RegisterCubit>().reset();
+                      context.read<ForgetPasswordCubit>().reset();
+                      if (signInFormKey.currentState!.validate()) {
+                        FocusScope.of(context).unfocus();
+                        context.read<LoginCubit>().login(
+                              loginEmail: loginEmail.text,
+                              loginPassword: loginPassword.text,
                             );
-                          },
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: AppSpacing.spacingLG),
-                    OrDivider(),
-                    SizedBox(height: AppSpacing.spacingLG),
-                    GoogleSignInButton(
-                      isPrimary: false,
-                    )
-                  ],
+                      }
+                    },
+                  ),
                 ),
-              ),
-              AnimatedPositioned(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeOut,
-                left: AppSpacing.spacing2XL,
-                right: AppSpacing.spacing2XL,
-                bottom: _keyboardHeight > 0 ? _keyboardHeight + AppSpacing.spacingLG : 175,
-                child: MainButton(
-                  text: "تسجيل الدخول",
-                  isLoading: _isLoading,
-                  onTap: () {
-                    // Restore states to defaults
-                    context.read<RegisterCubit>().reset();
-                    context.read<ForgetPasswordCubit>().reset();
-                    if (signInFormKey.currentState!.validate()) {
-                      FocusScope.of(context).unfocus();
-                      context.read<LoginCubit>().login(
-                            loginEmail: loginEmail.text,
-                            loginPassword: loginPassword.text,
-                          );
-                    }
-                  },
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

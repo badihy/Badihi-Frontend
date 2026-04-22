@@ -22,6 +22,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   bool _isLoading = false;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("Here: ${widget.token}");
+  }
+
+  @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> resetPasswordFormKey = GlobalKey();
     TextEditingController resetPasswordPassword = TextEditingController();
@@ -93,9 +100,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                       setState(() {
                         _isLoading = true;
                       });
-                      await Future.delayed(const Duration(seconds: 2));
+                      // await Future.delayed(const Duration(seconds: 2));
 
-                      setState(() => _isLoading = false);
+                      // setState(() => _isLoading = false);
                       if (resetPasswordFormKey.currentState!.validate()) {
                         context.read<ForgetPasswordCubit>().resetPassword(
                               token: widget.token,
